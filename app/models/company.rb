@@ -2,9 +2,12 @@ class Company < ActiveRecord::Base
   has_friendly_id :name, :use_slug => true
   
   has_many :titles
-    attr_accessible :name, :cached_slug, :phone, :street1, :street2, :city, :state, :zipcode, :full_address
+  has_many :employmentships, :dependent => :destroy
+  has_many :users, :through => :employmentships
+  
+  attr_accessible :name, :cached_slug, :phone, :street1, :street2, :city, :state, :zipcode, :full_address
     
-    validates_uniqueness_of :name, :message => "must be unique"
+  validates_uniqueness_of :name, :message => "must be unique"
   
   before_save :update_full_address
     

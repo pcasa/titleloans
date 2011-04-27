@@ -10,11 +10,11 @@ class TitleLoan < ActiveRecord::Base
   
     attr_accessible :vin, :make, :model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made
     
-    validates_presence_of :customer_id, :loan_amount, :vin, :on => :create, :message => "can't be blank"
-    validates_numericality_of :year, :on => :create, :message => "is not a number"
+    validates_presence_of :customer_id, :loan_amount, :vin, :message => "can't be blank"
+    validates_numericality_of :year, :message => "is not a number"
     
   def payment_should_be
-    if payments_made <= 3
+    if payments_made.blank? || payments_made <= 3
       payment_should_be = (loan_amount / 12) + (loan_amount * 0.15)
     else
       payment_should_be = (loan_amount / 12) + (loan_amount * 0.10)

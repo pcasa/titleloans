@@ -32,9 +32,35 @@
     <%= f.label :zipcode %><br />
     <%= f.text_field :zipcode %>
   </p>
-  <p>
-    <%= f.label :full_address %><br />
-    <%= f.text_field :full_address %>
+<p>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
   </p>
+<p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+
+<% if current_user.is? :admin %>
+ <% @companies = Company.all %>
+<% elsif current_user.is? :manager %>
+ <% @companies = Company.first %>
+<% end %>
+  <p>Roles:<br />
+	<% for role in User::ROLES %>
+	  <%= check_box_tag "user[roles][]", role, @user.roles.include?(role) %>
+	  <%=h role.humanize %><br />
+	<% end %>
+	<%= hidden_field_tag "user[roles][]", "" %>
+  </p>
+<% unless @companies.blank? %>
+<p>
+	<strong>Assigned to Work At:</strong><br />
+   <% @companies.each do |company| %>
+		<%= check_box_tag :company_ids, company.id, @user.companies.include?(company), :name => 'user[company_ids][]' -%> <%= label_tag :companies_ids, company.name %>
+   <% end %>
+</p>
+<% end %>
+
   <p><%= f.submit %></p>
 <% end %>

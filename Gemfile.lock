@@ -32,11 +32,14 @@ GEM
     babosa (0.2.2)
     bcrypt-ruby (2.1.4)
     builder (2.1.2)
+    cancan (1.5.1)
     devise (1.1.5)
       bcrypt-ruby (~> 2.1.2)
       warden (~> 1.0.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    faker (0.9.5)
+      i18n (~> 0.4)
     friendly_id (3.2.1)
       babosa (~> 0.2.1)
     i18n (0.5.0)
@@ -54,6 +57,7 @@ GEM
     nifty-generators (0.4.4)
     pg (0.11.0)
     polyglot (0.3.1)
+    populator (1.0.0)
     rack (1.2.2)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
@@ -84,10 +88,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby
+  cancan
   devise
+  faker
   friendly_id (~> 3.2.1)
   jquery-rails (>= 0.2.6)
   mocha
   nifty-generators
   pg
+  populator
   rails (= 3.0.3)

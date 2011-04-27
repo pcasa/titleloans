@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110427040317) do
+ActiveRecord::Schema.define(:version => 20110427163513) do
 
   create_table "comments", :force => true do |t|
     t.string   "commentable_type"
@@ -44,6 +44,13 @@ ActiveRecord::Schema.define(:version => 20110427040317) do
     t.string   "state"
     t.string   "zipcode"
     t.string   "full_address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "employmentships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "company_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -109,9 +116,12 @@ ActiveRecord::Schema.define(:version => 20110427040317) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "roles",                :limit => 128
+    t.integer  "roles_mask"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["roles"], :name => "index_users_on_roles"
 
 end

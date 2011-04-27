@@ -3,8 +3,14 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.3'
 gem "nifty-generators"
 gem 'jquery-rails', '>= 0.2.6'
+gem 'bcrypt-ruby'
 gem 'devise'
+gem 'cancan'
 gem 'friendly_id', '~> 3.2.1'
+
+
+gem 'populator'
+gem 'faker'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
