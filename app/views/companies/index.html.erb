@@ -1,0 +1,31 @@
+<% title "Companies" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Cached Slug</th>
+    <th>Phone</th>
+    <th>Street1</th>
+    <th>Street2</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zipcode</th>
+  </tr>
+  <% for company in @companies %>
+    <tr>
+      <td><%= company.name %></td>
+      <td><%= company.cached_slug %></td>
+      <td><%= company.phone %></td>
+      <td><%= company.street1 %></td>
+      <td><%= company.street2 %></td>
+      <td><%= company.city %></td>
+      <td><%= company.state %></td>
+      <td><%= company.zipcode %></td>
+      <td><%= link_to "Show", company %></td>
+      <td><%= link_to "Edit", edit_company_path(company) %></td>
+      <td><%= link_to "Destroy", company, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Company", new_company_path(company) %></p>

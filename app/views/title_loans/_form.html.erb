@@ -1,0 +1,40 @@
+<%= form_for @title_loan do |f| %>
+  <%= f.error_messages %>
+  <p>
+  	<%= f.label :customer_id %><br />
+	<%= f.collection_select :customer_id, Customer.all(:order => 'lastname, firstname'), :id, :full_name, :prompt => "Select Someone" %>
+  </p>
+  <p>
+    <%= f.label :vin %><br />
+    <%= f.text_field :vin %>
+  </p>
+  <p>
+    <%= f.label :make %><br />
+    <%= f.text_field :make %>
+  </p>
+  <p>
+    <%= f.label :model %><br />
+    <%= f.text_field :model %>
+  </p>
+  <p>
+    <%= f.label :style %><br />
+    <%= f.text_field :style %>
+  </p>
+  <p>
+    <%= f.label :color %><br />
+    <%= f.text_field :color %>
+  </p>
+  <p>
+    Year:<br />
+    <%= select_tag "title_loan[year]", options_for_select(((Time.now.year-40..Time.now.year+2).collect {|a| [ a.to_i, a.to_s]})) %>
+  </p>
+  <p>
+    <%= f.label :loan_amount %><br />
+    <%= f.text_field :loan_amount %>
+  </p>
+  <p>
+    <%= f.label :payments_made %><br />
+    <%= f.text_field :payments_made %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

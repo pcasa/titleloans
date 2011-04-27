@@ -1,0 +1,76 @@
+<% title "New Customer" %>
+
+<%= form_for @customer do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :firstname %><br />
+    <%= f.text_field :firstname %>
+  </p>
+  <p>
+    <%= f.label :lastname %><br />
+    <%= f.text_field :lastname %>
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :street1 %><br />
+    <%= f.text_field :street1 %>
+  </p>
+  <p>
+    <%= f.label :street2 %><br />
+    <%= f.text_field :street2 %>
+  </p>
+  <p>
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </p>
+  <p>
+    <%= f.label :state %><br />
+    <%= f.text_field :state %>
+  </p>
+  <p>
+    <%= f.label :zipcode %><br />
+    <%= f.text_field :zipcode %>
+  </p>
+	<%= f.fields_for :title_loans do |builder| %>
+	<%= builder.hidden_field :customer_id, :value => @customer %>
+		  <p>
+		    <%= builder.label :vin %><br />
+		    <%= builder.text_field :vin %>
+		  </p>
+		  <p>
+		    <%= builder.label :make %><br />
+		    <%= builder.text_field :make %>
+		  </p>
+		  <p>
+		    <%= builder.label :model %><br />
+		    <%= builder.text_field :model %>
+		  </p>
+		  <p>
+		    <%= builder.label :style %><br />
+		    <%= builder.text_field :style %>
+		  </p>
+		  <p>
+		    <%= builder.label :color %><br />
+		    <%= builder.text_field :color %>
+		  </p>
+		  <p>
+		    Year:<br />
+		    <%= builder.select :year, options_for_select(((Time.now.year-40..Time.now.year+2).collect {|a| [ a.to_i, a.to_s]})) %>
+		  </p>
+		  <p>
+		    <%= builder.label :loan_amount %><br />
+		    <%= builder.text_field :loan_amount %>
+		  </p>
+		  <p>
+		    <%= builder.label :payments_made %><br />
+		    <%= builder.text_field :payments_made %>
+		  </p>
+	<% end %>
+  <p><%= f.submit %></p>
+<% end %>
+
+
+<p><%= link_to "Back to List", customers_path %></p>

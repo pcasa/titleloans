@@ -1,0 +1,45 @@
+<% title "Title Loan" %>
+
+<p>
+  <strong>Vin:</strong>
+  <%= @title_loan.customer.full_name unless @title_loan.customer_id.blank?  %>
+</p>
+<p>
+  <strong>Vin:</strong>
+  <%= @title_loan.vin %>
+</p>
+<p>
+  <strong>Make:</strong>
+  <%= @title_loan.make %>
+</p>
+<p>
+  <strong>Model:</strong>
+  <%= @title_loan.model %>
+</p>
+<p>
+  <strong>Style:</strong>
+  <%= @title_loan.style %>
+</p>
+<p>
+  <strong>Color:</strong>
+  <%= @title_loan.color %>
+</p>
+<p>
+  <strong>Year:</strong>
+  <%= @title_loan.year %>
+</p>
+<p>
+  <strong>Loan Amount:</strong>
+  <%= @title_loan.loan_amount %>
+</p>
+<p>
+  <strong>Payments Made:</strong>
+  <%= @title_loan.payments_made %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_title_loan_path(@title_loan) %> |
+  <%= link_to "Destroy", @title_loan, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", title_loans_path %> | 
+  <%= link_to "Invoice", new_order_path(:title_loan_id => @title_loan.id, :customer_id => @title_loan.customer_id) %>
+</p>

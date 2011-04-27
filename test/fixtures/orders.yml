@@ -1,0 +1,11 @@
+one:
+  company_id: 1
+  customer_id: 1
+  title_loan_id: 1
+  amount_paid: 9.99
+
+two:
+  company_id: 1
+  customer_id: 1
+  title_loan_id: 1
+  amount_paid: 9.99

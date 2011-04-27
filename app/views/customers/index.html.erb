@@ -1,0 +1,31 @@
+<% title "Customers" %>
+
+<table>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Street1</th>
+    <th>Street2</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zipcode</th>
+  </tr>
+  <% for customer in @customers %>
+    <tr>
+      <td><%= customer.firstname %></td>
+      <td><%= customer.lastname %></td>
+      <td><%= customer.email %></td>
+      <td><%= customer.street1 %></td>
+      <td><%= customer.street2 %></td>
+      <td><%= customer.city %></td>
+      <td><%= customer.state %></td>
+      <td><%= customer.zipcode %></td>
+      <td><%= link_to "Show", customer %></td>
+      <td><%= link_to "Edit", edit_customer_path(customer) %></td>
+      <td><%= link_to "Destroy", customer, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Customer", new_customer_path %></p>

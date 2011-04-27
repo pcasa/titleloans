@@ -1,0 +1,15 @@
+one:
+  vin: MyString
+  make: MyString
+  model: MyString
+  style: MyString
+  color: MyString
+  year: 1
+
+two:
+  vin: MyString
+  make: MyString
+  model: MyString
+  style: MyString
+  color: MyString
+  year: 1

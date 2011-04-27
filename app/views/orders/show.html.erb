@@ -1,0 +1,24 @@
+<% title "Order" %>
+
+<p>
+  <strong>Company:</strong>
+  <%= @order.company_id %>
+</p>
+<p>
+  <strong>Customer:</strong>
+  <%= @order.customer_id %>
+</p>
+<p>
+  <strong>Title Loan:</strong>
+  <%= @order.title_loan_id %>
+</p>
+<p>
+  <strong>Amount Paid:</strong>
+  <%= @order.amount_paid %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_order_path(@order) %> |
+  <%= link_to "Destroy", @order, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", orders_path %>
+</p>

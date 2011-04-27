@@ -1,0 +1,33 @@
+<% title "Users" %>
+
+<table>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Street1</th>
+    <th>Street2</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zipcode</th>
+    <th>Full Address</th>
+  </tr>
+  <% for user in @users %>
+    <tr>
+      <td><%= user.firstname %></td>
+      <td><%= user.lastname %></td>
+      <td><%= user.email %></td>
+      <td><%= user.street1 %></td>
+      <td><%= user.street2 %></td>
+      <td><%= user.city %></td>
+      <td><%= user.state %></td>
+      <td><%= user.zipcode %></td>
+      <td><%= user.full_address %></td>
+      <td><%= link_to "Show", user %></td>
+      <td><%= link_to "Edit", edit_user_path(user) %></td>
+      <td><%= link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New User", new_user_path(user) %></p>
