@@ -4,6 +4,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :company_id
       t.integer :customer_id
       t.integer :title_loan_id
+      t.decimal :loan_payment, :precision => 7, :scale => 2
       t.decimal :amount_paid, :precision => 7, :scale => 2
       t.timestamps
     end

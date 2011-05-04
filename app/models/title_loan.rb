@@ -13,6 +13,10 @@ class TitleLoan < ActiveRecord::Base
     validates_presence_of :customer_id, :loan_amount, :vin, :message => "can't be blank"
     validates_numericality_of :year, :message => "is not a number"
     
+  def payment
+    loan_amount / 12
+  end
+  
   def payment_should_be
     if payments_made.blank? || payments_made <= 3
       payment_should_be = (loan_amount / 12) + (loan_amount * 0.15)

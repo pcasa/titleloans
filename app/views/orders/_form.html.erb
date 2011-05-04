@@ -15,6 +15,10 @@
 	<p>Payment Should be:<br />
 		<%= number_to_currency(@title_loan.payment_should_be) unless @title_loan.blank?%>
 	</p>
+  	<p>
+	    <%= f.label :loan_payment %><br />
+	    $ <%= f.text_field :loan_payment %>
+	  </p>
   <p>
     <%= f.label :amount_paid %><br />
     <%= f.text_field :amount_paid %>
