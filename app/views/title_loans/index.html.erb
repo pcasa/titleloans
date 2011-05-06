@@ -11,18 +11,20 @@
     <th>Year</th>
 	<th>Payments</th>
 	<th>Loan Amount</th>
+	<th>Closed?</th>
   </tr>
   <% for title_loan in @title_loans %>
     <tr>
       <td><%= title_loan.customer.full_name unless title_loan.customer_id.blank? || !Customer.exists?(title_loan.customer_id) %></td>
 	  <td><%= title_loan.vin %></td>
       <td><%= title_loan.make %></td>
-      <td><%= title_loan.model %></td>
+      <td><%= title_loan.vin_model %></td>
       <td><%= title_loan.style %></td>
       <td><%= title_loan.color %></td>
       <td><%= title_loan.year %></td>
 	  <td><%= title_loan.loan_amount %></td>
 	  <td><%= title_loan.payments_made %></td>
+	  <td><%= title_loan.closed? %></td>
       <td><%= link_to "Show", title_loan %></td>
       <td><%= link_to "Edit", edit_title_loan_path(title_loan) %></td>
       <td><%= link_to "Destroy", title_loan, :confirm => 'Are you sure?', :method => :delete %></td>

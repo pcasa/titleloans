@@ -1,9 +1,11 @@
 <%= form_for @title_loan do |f| %>
   <%= f.error_messages %>
+	<%= f.hidden_field :parent_id %>
   <p>
   	<%= f.label :customer_id %><br />
 	<%= f.collection_select :customer_id, Customer.all(:order => 'lastname, firstname'), :id, :full_name, :prompt => "Select Someone" %>
   </p>
+<% if @title_loan.parent_id.blank? %>
   <p>
     <%= f.label :vin %><br />
     <%= f.text_field :vin %>
@@ -13,8 +15,8 @@
     <%= f.text_field :make %>
   </p>
   <p>
-    <%= f.label :model %><br />
-    <%= f.text_field :model %>
+    Model<br />
+    <%= f.text_field :vin_model %>
   </p>
   <p>
     <%= f.label :style %><br />
@@ -28,6 +30,13 @@
     Year:<br />
     <%= select_tag "title_loan[year]", options_for_select(((Time.now.year-40..Time.now.year+2).collect {|a| [ a.to_i, a.to_s]})) %>
   </p>
+<% end %>
+<% if !@title_loan.parent_id.blank? %>
+	<p>
+	    <%= f.label :previous_balance %><br />
+	    <%= f.text_field :previous_balance %>
+	  </p>
+<% end %>
   <p>
     <%= f.label :loan_amount %><br />
     <%= f.text_field :loan_amount %>

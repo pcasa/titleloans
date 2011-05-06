@@ -1,5 +1,6 @@
 class Customer < ActiveRecord::Base
   has_many :title_loans
+  has_many :orders
     attr_accessible :firstname, :lastname, :email, :street1, :street2, :city, :state, :zipcode, :full_address, :title_loans_attributes
     has_many :comments, :as => :commentable, :dependent => :destroy
     
