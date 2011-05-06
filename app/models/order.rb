@@ -5,9 +5,16 @@ class Order < ActiveRecord::Base
     belongs_to :customer, :class_name => "Customer", :foreign_key => "customer_id"
     belongs_to :title_loan
   
-  before_create :update_title 
+  before_create :set_loan_payment, :update_title 
   before_destroy :put_back_to_titles
   
+  def set_loan_payment
+    if title_loan.payment_should_be < self.amount_paid 
+      self.loan_payment = (self.amount_paid - title_loan.payment_should_be)
+    else 
+      self.loan_payment = 0.00
+    end
+  end
   
 private
   def update_title

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110427163513) do
+ActiveRecord::Schema.define(:version => 20110506140323) do
 
   create_table "comments", :force => true do |t|
     t.string   "commentable_type"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20110427163513) do
     t.integer  "company_id"
     t.integer  "customer_id"
     t.integer  "title_loan_id"
-    t.decimal  "loan_payment",   :precision => 7, :scale => 2
+    t.decimal  "loan_payment",  :precision => 7, :scale => 2
     t.decimal  "amount_paid",   :precision => 7, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -80,19 +80,21 @@ ActiveRecord::Schema.define(:version => 20110427163513) do
   create_table "title_loans", :force => true do |t|
     t.integer  "customer_id"
     t.integer  "company_id"
-    t.string   "vin",           :limit => 128
-    t.string   "make",          :limit => 128
-    t.string   "model",         :limit => 128
-    t.string   "style",         :limit => 128
-    t.string   "color",         :limit => 128
+    t.string   "vin",              :limit => 128
+    t.string   "make",             :limit => 128
+    t.string   "model",            :limit => 128
+    t.string   "style",            :limit => 128
+    t.string   "color",            :limit => 128
     t.integer  "year"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "closed_date"
     t.integer  "closed_by"
-    t.decimal  "loan_amount",                  :precision => 7, :scale => 2
+    t.decimal  "loan_amount",                     :precision => 7, :scale => 2
     t.integer  "parent_id"
-    t.integer  "payments_made",                                              :default => 0
+    t.integer  "payments_made",                                                 :default => 0
+    t.decimal  "base_amount",                     :precision => 7, :scale => 2
+    t.decimal  "previous_balance",                :precision => 7, :scale => 2, :default => 0.0
   end
 
   create_table "users", :force => true do |t|

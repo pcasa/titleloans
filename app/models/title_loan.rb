@@ -8,10 +8,18 @@ class TitleLoan < ActiveRecord::Base
   has_many :orders
   
   
-    attr_accessible :vin, :make, :model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made
+    attr_accessible :vin, :make, :model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance
     
     validates_presence_of :customer_id, :loan_amount, :vin, :message => "can't be blank"
     validates_numericality_of :year, :message => "is not a number"
+    
+    before_create :set_base_amount
+    
+    
+  def set_base_amount
+    self.base_amount = (loan_amount + previous_balance)
+  end
+     
     
   def payment
     loan_amount / 12
@@ -19,9 +27,13 @@ class TitleLoan < ActiveRecord::Base
   
   def payment_should_be
     if payments_made.blank? || payments_made <= 3
-      payment_should_be = (loan_amount / 12) + (loan_amount * 0.15)
+      if ((base_amount <= 1499.99) && payments_made <= 3) || ((base_amount == 1500..1999.99) && payments_made <= 2) || ((base_amount == 2000..2999.99) && payments_made <= 1)
+        payment_should_be = (base_amount * 0.15)
+      else
+          payment_should_be = (base_amount * 0.10)
+      end
     else
-      payment_should_be = (loan_amount / 12) + (loan_amount * 0.10)
+      payment_should_be = (base_amount * 0.10)
     end  
     return payment_should_be
   end

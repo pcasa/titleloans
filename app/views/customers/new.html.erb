@@ -61,6 +61,10 @@
 		    <%= builder.select :year, options_for_select(((Time.now.year-40..Time.now.year+2).collect {|a| [ a.to_i, a.to_s]})) %>
 		  </p>
 		  <p>
+		    <%= builder.label :previous_balance %><br />
+		    <%= builder.text_field :previous_balance %>
+		  </p>
+		  <p>
 		    <%= builder.label :loan_amount %><br />
 		    <%= builder.text_field :loan_amount %>
 		  </p>
