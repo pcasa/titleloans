@@ -31,6 +31,9 @@ require 'populator'
 puts "Clearing Users"
 User.delete_all
 
+puts "Clearing Companies"
+Company.delete_all
+
 Employmentship.delete_all
 
 puts "Clearing title loans"
