@@ -9,6 +9,7 @@ class Company < ActiveRecord::Base
   attr_accessible :name, :cached_slug, :phone, :street1, :street2, :city, :state, :zipcode, :full_address
     
   validates_uniqueness_of :name, :message => "must be unique"
+  validates_presence_of :name, :on => :create, :message => "can't be blank"
   
   before_save :update_full_address
     

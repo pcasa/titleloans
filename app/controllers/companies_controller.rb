@@ -4,7 +4,11 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    @company = Company.find(params[:company_id])
+    if !params[:company_id].blank?
+      @company = Company.find(params[:company_id])
+    else
+      @company = Company.find(params[:id])
+    end
   end
 
   def new
