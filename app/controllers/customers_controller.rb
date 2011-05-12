@@ -1,4 +1,7 @@
 class CustomersController < ApplicationController
+  before_filter :authenticate_user!
+  load_and_authorize_resource
+  
   def index
     @search = current_company.customers.search(params[:search])
     @customers = @search.all.paginate(:page => params[:page], :per_page => 20)
