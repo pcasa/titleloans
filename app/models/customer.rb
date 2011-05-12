@@ -1,8 +1,12 @@
 class Customer < ActiveRecord::Base
   has_many :title_loans
   has_many :orders
-    attr_accessible :firstname, :lastname, :email, :street1, :street2, :city, :state, :zipcode, :full_address, :title_loans_attributes
-    has_many :comments, :as => :commentable, :dependent => :destroy
+  has_many :comments, :as => :commentable, :dependent => :destroy
+  
+  belongs_to :company, :class_name => "Company", :foreign_key => "company_id"
+  
+  
+    attr_accessible :firstname, :lastname, :email, :street1, :street2, :city, :state, :zipcode, :full_address, :customer_number, :company_id, :title_loans_attributes
     
     accepts_nested_attributes_for :title_loans, :allow_destroy => true, :reject_if => proc { |a| a[:vin].blank? && a[:loan_amount].blank? }
     

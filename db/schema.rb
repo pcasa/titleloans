@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110506151600) do
+ActiveRecord::Schema.define(:version => 20110512000528) do
 
   create_table "comments", :force => true do |t|
     t.string   "commentable_type"
@@ -46,7 +46,11 @@ ActiveRecord::Schema.define(:version => 20110506151600) do
     t.string   "full_address"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
+    t.string   "customer_number"
   end
+
+  add_index "customers", ["company_id"], :name => "index_customers_on_company_id"
 
   create_table "employmentships", :force => true do |t|
     t.integer  "user_id"
@@ -64,6 +68,8 @@ ActiveRecord::Schema.define(:version => 20110506151600) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "orders", ["company_id"], :name => "index_orders_on_company_id"
 
   create_table "slugs", :force => true do |t|
     t.string   "name"
@@ -96,6 +102,8 @@ ActiveRecord::Schema.define(:version => 20110506151600) do
     t.decimal  "base_amount",                     :precision => 7, :scale => 2
     t.decimal  "previous_balance",                :precision => 7, :scale => 2, :default => 0.0
   end
+
+  add_index "title_loans", ["company_id"], :name => "index_title_loans_on_company_id"
 
   create_table "users", :force => true do |t|
     t.string   "firstname"

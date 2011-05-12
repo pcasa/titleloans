@@ -1,6 +1,7 @@
 class CustomersController < ApplicationController
   def index
-    @customers = Customer.all
+    @search = current_company.customers.search(params[:search])
+    @customers = @search.all.paginate(:page => params[:page], :per_page => 20)
   end
 
   def show
@@ -10,13 +11,14 @@ class CustomersController < ApplicationController
   def new
     @customer = Customer.new
     @customer.title_loans.build
+    @customer.company_id = current_company.id
   end
 
   def create
     @customer = Customer.new(params[:customer])
     if @customer.save
       flash[:notice] = "Successfully created customer."
-      redirect_to @customer
+      redirect_to [current_company, @customer]
     else
       render :action => 'new'
     end
@@ -30,7 +32,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     if @customer.update_attributes(params[:customer])
       flash[:notice] = "Successfully updated customer."
-      redirect_to customer_url
+      redirect_to [current_company, @customer]
     else
       render :action => 'edit'
     end
@@ -40,6 +42,6 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     @customer.destroy
     flash[:notice] = "Successfully destroyed customer."
-    redirect_to customers_url
+    redirect_to company_customers_url
   end
 end

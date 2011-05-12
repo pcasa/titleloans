@@ -25,11 +25,11 @@
 	  <td><%= title_loan.loan_amount %></td>
 	  <td><%= title_loan.payments_made %></td>
 	  <td><%= title_loan.closed? %></td>
-      <td><%= link_to "Show", title_loan %></td>
-      <td><%= link_to "Edit", edit_title_loan_path(title_loan) %></td>
-      <td><%= link_to "Destroy", title_loan, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to "Show", [current_company, title_loan] %></td>
+      <td><%= link_to "Edit", edit_company_title_loan_path(current_company, title_loan) %></td>
+      <td><%= link_to "Destroy", [current_company, title_loan], :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
 
-<p><%= link_to "New Title Loan", new_title_loan_path(title_loan) %></p>
+<p><%= link_to "New Title Loan", new_company_title_loan_path(current_company) %></p>

@@ -3,6 +3,6 @@
 <%= render 'form' %>
 
 <p>
-  <%= link_to "Show", @order %> |
-  <%= link_to "View All", orders_path %>
+  <%= link_to "Show", [current_company, @order] %> |
+  <%= link_to "View All", company_orders_path %>
 </p>

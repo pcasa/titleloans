@@ -3,6 +3,9 @@
 <%= render 'form' %>
 
 <p>
-  <%= link_to "Show", @title_loan %> |
-  <%= link_to "View All", title_loans_path %>
+  <%= link_to "Show", [current_company, @title_loan] %> |
+  <%= link_to "View All", company_title_loans_path %>
+  <% if !@title_loan.customer_id.blank? %>
+	 | <%= link_to "Back to customer", company_customer_path(current_company, @title_loan.customer_id) %> 
+	<% end %>
 </p>

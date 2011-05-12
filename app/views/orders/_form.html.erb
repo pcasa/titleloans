@@ -1,4 +1,4 @@
-<%= form_for @order do |f| %>
+<%= form_for [current_company, @order] do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :company_id %><br />

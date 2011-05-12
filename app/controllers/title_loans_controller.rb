@@ -18,7 +18,7 @@ class TitleLoansController < ApplicationController
     @title_loan = TitleLoan.new(params[:title_loan])
     if @title_loan.save
       flash[:notice] = "Successfully created title loan."
-      redirect_to @title_loan
+      redirect_to [current_company, @title_loan]
     else
       render :action => 'new'
     end
@@ -32,7 +32,7 @@ class TitleLoansController < ApplicationController
     @title_loan = TitleLoan.find(params[:id])
     if @title_loan.update_attributes(params[:title_loan])
       flash[:notice] = "Successfully updated title loan."
-      redirect_to title_loan_url
+      redirect_to [current_company, @title_loan]
     else
       render :action => 'edit'
     end
@@ -42,6 +42,6 @@ class TitleLoansController < ApplicationController
     @title_loan = TitleLoan.find(params[:id])
     @title_loan.destroy
     flash[:notice] = "Successfully destroyed title loan."
-    redirect_to title_loans_url
+    redirect_to company_title_loans_url
   end
 end

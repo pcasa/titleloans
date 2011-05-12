@@ -31,6 +31,24 @@ require 'populator'
 puts "Clearing Users"
 User.delete_all
 
+Employmentship.delete_all
+
+puts "Clearing title loans"
+TitleLoan.delete_all
+
+puts "Clearing Orders"
+Order.delete_all
+
+puts "Clearing Customers"
+Customer.delete_all
+
+puts "Adding Norcross and Cummings"
+Company.create!(:name => "Norcross", :phone => "770-449-5525", :street1 => "5935 South Norcross Tucker Rd", :street2 => "Suite 9", :city => "Norcross", :state => "GA", :zipcode => "3093")
+
+
+puts "Adding Admin"
+
+
 
 street1 = Faker::Address.street_address(include_secondary = false)
 city = Faker::Address.city
@@ -49,6 +67,7 @@ User.create!(
 :full_address => street1 + "<br />" + city + ", " + state + " " + zip,
 :roles => ['admin']
 )
+
 
 
 

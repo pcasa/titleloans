@@ -4,6 +4,7 @@ class Company < ActiveRecord::Base
   has_many :titles
   has_many :employmentships, :dependent => :destroy
   has_many :users, :through => :employmentships
+  has_many :customers
   
   attr_accessible :name, :cached_slug, :phone, :street1, :street2, :city, :state, :zipcode, :full_address
     

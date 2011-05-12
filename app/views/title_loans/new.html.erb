@@ -2,4 +2,9 @@
 
 <%= render 'form' %>
 
-<p><%= link_to "Back to List", title_loans_path %></p>
+<p>
+<%= link_to "Back to List", company_title_loans_path %> 
+<% if !params[:customer_id].blank? %>
+	 | <%= link_to "Back to customer", company_customer_path(current_company, params[:customer_id]) %> 
+<% end %>
+</p>

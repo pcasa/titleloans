@@ -1,7 +1,14 @@
 <% title "New Customer" %>
 
-<%= form_for @customer do |f| %>
+<%= form_for [current_company, @customer] do |f| %>
   <%= f.error_messages %>
+  <p>
+  	<% if current_user.is? :admin %>
+	  <strong>Assigned Company:</strong> - <%= f.collection_select(:company_id, Company.all, :id, :name, :prompt => "Select Main Company") %>
+	<% else %>
+	  <%= f.hidden_field :company_id %>
+	<% end %>
+  </p>
   <p>
     <%= f.label :firstname %><br />
     <%= f.text_field :firstname %>
@@ -45,8 +52,8 @@
 		    <%= builder.text_field :make %>
 		  </p>
 		  <p>
-		    <%= builder.label :model %><br />
-		    <%= builder.text_field :model %>
+		    Model<br />
+		    <%= builder.text_field :vin_model %>
 		  </p>
 		  <p>
 		    <%= builder.label :style %><br />
@@ -77,4 +84,4 @@
 <% end %>
 
 
-<p><%= link_to "Back to List", customers_path %></p>
+<p><%= link_to "Back to List", company_customers_path %></p>

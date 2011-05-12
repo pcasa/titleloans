@@ -8,6 +8,8 @@ class Order < ActiveRecord::Base
   before_create :set_loan_payment, :update_title 
   before_destroy :put_back_to_titles
   
+  validates_presence_of :amount_paid, :message => "can't be blank"
+  
   def set_loan_payment
     if title_loan.payment_should_be < self.amount_paid 
       self.loan_payment = (self.amount_paid - title_loan.payment_should_be)

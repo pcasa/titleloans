@@ -23,11 +23,11 @@
       <td><%= user.state %></td>
       <td><%= user.zipcode %></td>
       <td><%= user.full_address %></td>
-      <td><%= link_to "Show", user %></td>
-      <td><%= link_to "Edit", edit_user_path(user) %></td>
-      <td><%= link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to "Show", [current_company, user] %></td>
+      <td><%= link_to "Edit", edit_company_user_path(current_company, user) %></td>
+      <td><%= link_to "Destroy", [current_company, user], :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
 
-<p><%= link_to "New User", new_user_path(user) %></p>
+<p><%= link_to "New User", new_company_user_path(current_company, user) %></p>

@@ -38,9 +38,9 @@
 </p>
 
 <p>
-  <%= link_to "Edit", edit_title_loan_path(@title_loan) %> |
-  <%= link_to "Destroy", @title_loan, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", title_loans_path %> | 
-  <%= link_to "Invoice", new_order_path(:title_loan_id => @title_loan.id, :customer_id => @title_loan.customer_id) %> | 
-  <%= link_to "Give Money", new_title_loan_path(:parent_id => @title_loan.id, :customer_id => @title_loan.customer_id)%>
+  <%= link_to "Edit", edit_company_title_loan_path(current_company, @title_loan) %> |
+  <%= link_to "Destroy", [current_company, @title_loan], :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", company_title_loans_path %> | 
+  <%= link_to "Invoice", new_company_order_path(current_company, :title_loan_id => @title_loan.id, :customer_id => @title_loan.customer_id) %> | 
+  <%= link_to "Give Money", new_company_title_loan_path(current_company, :parent_id => @title_loan.id, :customer_id => @title_loan.customer_id)%>
 </p>

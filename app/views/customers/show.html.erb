@@ -1,55 +1,73 @@
-<% title "Customer" %>
-
-<p>
-  <strong>Firstname:</strong>
-  <%= @customer.firstname %>
-</p>
-<p>
-  <strong>Lastname:</strong>
-  <%= @customer.lastname %>
-</p>
-<p>
-  <strong>Email:</strong>
-  <%= @customer.email %>
-</p>
-<p>
-  <strong>Street1:</strong>
-  <%= @customer.street1 %>
-</p>
-<p>
-  <strong>Street2:</strong>
-  <%= @customer.street2 %>
-</p>
-<p>
-  <strong>City:</strong>
-  <%= @customer.city %>
-</p>
-<p>
-  <strong>State:</strong>
-  <%= @customer.state %>
-</p>
-<p>
-  <strong>Zipcode:</strong>
-  <%= @customer.zipcode %>
-</p>
-<p>
-  <strong>Full Address:</strong>
-  <%= @customer.full_address.html_safe %>
-</p>
-
-<% if !@customer.title_loans.blank? %>
-  <% for title in @customer.title_loans %>
-    <%= title.vin %> with a balance of <%= title.loan_amount %> and <%= title.payments_made %> payments made.  <%= link_to "Make a Payment", new_order_path(:customer_id => @customer.id, :title_loan_id => title.id)%><br />
-  <% end %>
-<% else %>
-No Title Loans for Customer
-<% end %>
+<% title @customer.full_name %>
 
 
+<div id="tabs">
+	<ul>
+		<li><a href="#info">Customer Info</a></li>
+		<li><a href="#titles">Title Loans</a></li>
+	</ul>
+	<div id="info">
+		<p>
+		  <strong>Firstname:</strong>
+		  <%= @customer.firstname %>
+		</p>
+		<p>
+		  <strong>Lastname:</strong>
+		  <%= @customer.lastname %>
+		</p>
+		<p>
+		  <strong>Email:</strong>
+		  <%= @customer.email %>
+		</p>
+		<p>
+		  <strong>Street1:</strong>
+		  <%= @customer.street1 %>
+		</p>
+		<p>
+		  <strong>Street2:</strong>
+		  <%= @customer.street2 %>
+		</p>
+		<p>
+		  <strong>City:</strong>
+		  <%= @customer.city %>
+		</p>
+		<p>
+		  <strong>State:</strong>
+		  <%= @customer.state %>
+		</p>
+		<p>
+		  <strong>Zipcode:</strong>
+		  <%= @customer.zipcode %>
+		</p>
+		<p>
+		  <strong>Full Address:</strong>
+		  <%= @customer.full_address.html_safe %>
+		</p>
 
-<p>
-  <%= link_to "Edit", edit_customer_path(@customer) %> |
-  <%= link_to "Destroy", @customer, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", customers_path %> | 
-  <%= link_to "Create Title", new_title_loan_path(:customer_id => @customer.id) %>
-</p>
+		
+
+
+
+		<p>
+		  <%= link_to "Edit", edit_company_customer_path(current_company, @customer) %> |
+		  <%= link_to "Destroy", [current_company, @customer], :confirm => 'Are you sure?', :method => :delete %> |
+		  <%= link_to "View All", company_customers_path %>
+		</p>
+		
+	</div>
+	<div id="titles">
+		<% if !@customer.title_loans.blank? %>
+		  <% for title in @customer.title_loans %>
+		    <%= title.vin %> with a balance of <%= number_to_currency(title.loan_amount) %> and <%= title.payments_made %> payments made.  <%= link_to "Make a Payment", new_company_order_path(current_company, :customer_id => @customer.id, :title_loan_id => title.id)%><br />
+		  <% end %>
+		<% else %>
+		No Title Loans for Customer
+		<% end %>
+		
+		<p>
+			<%= link_to "Create Title", new_company_title_loan_path(:customer_id => @customer.id) %>
+		</p>
+	</div>
+	
+</div>
+
