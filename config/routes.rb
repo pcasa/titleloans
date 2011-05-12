@@ -1,8 +1,11 @@
 Titleloans::Application.routes.draw do
   
-  
+  match '/companies' => 'companies#index'
+  match '/:company_id/companies' => 'companies#index', :as => :index_company
   match '/:company_id' => 'companies#show', :as => :show_company
-  
+  match '/companies/:id/edit' => 'companies#edit', :as => :edit_company
+  match '/companies/:id/new' => 'companies#new', :as => :new_company
+  match '/companies/:id/destroy' => 'companies#destroy', :as => :delete_company  
   scope '/:company_id', :as => :company do 
     resources :orders
     resources :title_loans
