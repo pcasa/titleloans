@@ -91,16 +91,16 @@ ActiveRecord::Schema.define(:version => 20110512000528) do
     t.string   "vin_model",        :limit => 128
     t.string   "style",            :limit => 128
     t.string   "color",            :limit => 128
-    t.integer  "year"
+    t.integer  "year",             :limit => 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "closed_date"
     t.integer  "closed_by"
-    t.decimal  "loan_amount",                     :precision => 7, :scale => 2
+    t.decimal  "loan_amount"
     t.integer  "parent_id"
-    t.integer  "payments_made",                                                 :default => 0
-    t.decimal  "base_amount",                     :precision => 7, :scale => 2
-    t.decimal  "previous_balance",                :precision => 7, :scale => 2, :default => 0.0
+    t.integer  "payments_made",                   :default => 0
+    t.decimal  "base_amount"
+    t.decimal  "previous_balance",                :default => 0.0
   end
 
   add_index "title_loans", ["company_id"], :name => "index_title_loans_on_company_id"
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(:version => 20110512000528) do
     t.string   "full_address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "encrypted_password",   :limit => 128,                :null => false
-    t.string   "password_salt",                                      :null => false
+    t.string   "encrypted_password",   :limit => 128
+    t.string   "password_salt"
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
