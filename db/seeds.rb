@@ -72,27 +72,3 @@ User.create!(
 )
 
 
-
-
-10.times do |user|
-  street1 = Faker::Address.street_address(include_secondary = false)
-  city = Faker::Address.city
-  state = Faker::Address.state_abbr
-  zip = Faker::Address.zip
-  firstname = Faker::Name.first_name
-  lastname = Faker::Name.last_name
-  User.create!(
-  :firstname => firstname,
-  :lastname => lastname,
-  :email => firstname + "@" + lastname + ".com",
-  :password => "123456",
-  :password_confirmation => "123456",
-  :street1 => street1,
-  :city => city,
-  :state => state,
-  :zipcode => zip,
-  :full_address => street1 + "<br />" + city + ", " + state + " " + zip,
-  :roles => ['employee']
-  )
-  
-end
