@@ -19,6 +19,8 @@ gem 'faker'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'pg'
+gem 'mysql'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

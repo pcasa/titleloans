@@ -5,6 +5,10 @@
   <%= @title_loan.customer.full_name unless @title_loan.customer_id.blank?  %>
 </p>
 <p>
+  <strong>Tag:</strong>
+  <%= @title_loan.tag_number %>
+</p>
+<p>
   <strong>Vin:</strong>
   <%= @title_loan.vin %>
 </p>
@@ -35,6 +39,15 @@
 <p>
   <strong>Payments Made:</strong>
   <%= @title_loan.payments_made %>
+</p>
+<p>
+  <strong>Due Date:</strong>
+  <%= @title_loan.due_date %>
+</p>
+
+<p>
+	TEST:<br />
+	<%= @title_loan.estimate_payments(1) %>
 </p>
 
 <p>

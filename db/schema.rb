@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110512000528) do
+ActiveRecord::Schema.define(:version => 20110512212402) do
 
   create_table "comments", :force => true do |t|
     t.string   "commentable_type"
@@ -48,6 +48,10 @@ ActiveRecord::Schema.define(:version => 20110512000528) do
     t.datetime "updated_at"
     t.integer  "company_id"
     t.string   "customer_number"
+    t.string   "c_height",        :limit => 16
+    t.string   "gender",          :limit => 16
+    t.string   "race",            :limit => 64
+    t.date     "dob"
   end
 
   add_index "customers", ["company_id"], :name => "index_customers_on_company_id"
@@ -101,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20110512000528) do
     t.integer  "payments_made",                   :default => 0
     t.decimal  "base_amount"
     t.decimal  "previous_balance",                :default => 0.0
+    t.string   "tag_number",       :limit => 16
   end
 
   add_index "title_loans", ["company_id"], :name => "index_title_loans_on_company_id"

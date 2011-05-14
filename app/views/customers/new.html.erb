@@ -9,76 +9,176 @@
 	  <%= f.hidden_field :company_id %>
 	<% end %>
   </p>
-  <p>
-    <%= f.label :firstname %><br />
-    <%= f.text_field :firstname %>
-  </p>
-  <p>
-    <%= f.label :lastname %><br />
-    <%= f.text_field :lastname %>
-  </p>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :street1 %><br />
-    <%= f.text_field :street1 %>
-  </p>
-  <p>
-    <%= f.label :street2 %><br />
-    <%= f.text_field :street2 %>
-  </p>
-  <p>
-    <%= f.label :city %><br />
-    <%= f.text_field :city %>
-  </p>
-  <p>
-    <%= f.label :state %><br />
-    <%= f.text_field :state %>
-  </p>
-  <p>
-    <%= f.label :zipcode %><br />
-    <%= f.text_field :zipcode %>
-  </p>
-	<%= f.fields_for :title_loans do |builder| %>
+
+<table>
+	<tr>
+		<td>
+			<p>
+			    <%= f.label :firstname %><br />
+			    <%= f.text_field :firstname %>
+			</p>
+		</td>
+		<td>
+		  	<p>
+			    <%= f.label :lastname %><br />
+			    <%= f.text_field :lastname %>
+			 </p>	
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>
+			    <%= f.label :dob %><br />
+			    <%= f.text_field :dob %>
+		    </p>
+		</td>
+		<td>
+			<p>
+			    <%= f.label :email %><br />
+			    <%= f.text_field :email %>
+		    </p>	
+		</td>
+	</tr>
+	<tr>
+		<td>
+		  	<p>
+			    <%= f.label :street1 %><br />
+			    <%= f.text_field :street1 %>
+			</p>
+		</td>
+		<td>
+		  <p>
+		    <%= f.label :street2 %><br />
+		    <%= f.text_field :street2 %>
+		  </p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+		  	<p>
+			    <%= f.label :city %><br />
+			    <%= f.text_field :city %>
+			 </p>	
+		</td>
+		<td>
+		  	<p>
+			    <%= f.label :state %><br />
+			    <%= f.text_field :state %>
+			</p>
+		</td>
+		<td>
+		  	<p>
+			    <%= f.label :zipcode %><br />
+			    <%= f.text_field :zipcode %>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		
+		<td>
+		  	<p>
+			    Customer Height<br />
+			    <%= f.text_field :c_height %>
+			</p>	
+		</td>
+		<td>
+		  	<p>
+			    <%= f.label :gender %><br />
+			    <%= f.text_field :gender %>
+			</p>
+		</td>
+		<td>
+		  	<p>
+			    <%= f.label :race %><br />
+			    <%= f.text_field :race %>
+			  </p>
+		</td>
+	</tr>
+</table>
+
+  	<%= f.fields_for :title_loans do |builder| %>
 	<%= builder.hidden_field :customer_id, :value => @customer %>
-		  <p>
-		    <%= builder.label :vin %><br />
-		    <%= builder.text_field :vin %>
-		  </p>
-		  <p>
-		    <%= builder.label :make %><br />
-		    <%= builder.text_field :make %>
-		  </p>
-		  <p>
-		    Model<br />
-		    <%= builder.text_field :vin_model %>
-		  </p>
-		  <p>
-		    <%= builder.label :style %><br />
-		    <%= builder.text_field :style %>
-		  </p>
-		  <p>
-		    <%= builder.label :color %><br />
-		    <%= builder.text_field :color %>
-		  </p>
-		  <p>
-		    Year:<br />
-		    <%= builder.select :year, options_for_select(((Time.now.year-40..Time.now.year+2).collect {|a| [ a.to_i, a.to_s]})) %>
-		  </p>
-		  <p>
-		    <%= builder.label :previous_balance %><br />
-		    <%= builder.text_field :previous_balance %>
-		  </p>
-		  <p>
-		    <%= builder.label :loan_amount %><br />
-		    <%= builder.text_field :loan_amount %>
-		  </p>
-		  <p>
-		    <%= builder.label :payments_made %><br />
-		    <%= builder.text_field :payments_made %>
-		  </p>
+
+<table>
+	<tr>
+		<td>
+			<p>
+			    <%= builder.label :vin %><br />
+			    <%= builder.text_field :vin %>
+		    </p>
+		</td>
+		<td>
+			<p>
+			    <%= builder.label :make %><br />
+			    <%= builder.text_field :make %>
+			</p>
+		</td>
+		<td>
+		  	<p>
+			    Model<br />
+			    <%= builder.text_field :vin_model %>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>
+			    <%= builder.label :style %><br />
+			    <%= builder.text_field :style %>
+			</p>
+		</td>
+		<td>
+		 	<p>
+			    <%= builder.label :color %><br />
+			    <%= builder.text_field :color %>
+			</p>
+		</td>
+		<td>
+			<p>
+			    Year:<br />
+			    <%= builder.select :year, options_for_select(((Time.now.year-40..Time.now.year+2).collect {|a| [ a.to_i, a.to_s]})) %>
+			 </p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<p>
+			    Tag #<br />
+			    <%= builder.text_field :tag_number %>
+			  </p>	
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<p>
+			    <%= builder.label :previous_balance %><br />
+			    <%= builder.text_field :previous_balance %>
+			</p>
+		</td>
+		<td>
+			<p>
+			    <%= builder.label :loan_amount %><br />
+			    <%= builder.text_field :loan_amount %>
+			</p>
+		</td>
+		<td>
+			<p>
+			    <%= builder.label :payments_made %><br />
+			    <%= builder.text_field :payments_made %>
+		    </p>
+		</td>
+	</tr>
+</table>
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 	<% end %>
   <p><%= f.submit %></p>
 <% end %>

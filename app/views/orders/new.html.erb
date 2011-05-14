@@ -1,5 +1,28 @@
 <% title "New Order" %>
 
-<%= render 'form' %>
+<%= form_for [current_company, @order] do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :company_id %><br />
+    <%= f.text_field :company_id %>
+  </p>
+  <p>
+    Customer Info<br />
+    <%= f.collection_select :customer_id, Customer.all(:order => 'lastname, firstname'), :id, :full_name %>
+  </p>
+  <p>
+    Title<br />
+    <%= f.collection_select :title_loan_id, TitleLoan.all(:order => 'vin ASC'), :id, :vin %>
+  </p>
+	<p>Payment Should be:<br />
+		<%= number_to_currency(@title_loan.payment_should_be) unless @title_loan.blank? %>
+	</p>
+  <p>
+    <%= f.label :amount_paid %><br />
+    <%= f.text_field :amount_paid %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>
+
 
 <p><%= link_to "Back to List", company_orders_path %></p>

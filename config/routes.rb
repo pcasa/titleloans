@@ -1,5 +1,8 @@
 Titleloans::Application.routes.draw do
   
+  
+  resources :companies
+  
   match '/companies' => 'companies#index'
   match '/:company_id/companies' => 'companies#index', :as => :index_company
   match '/:company_id' => 'companies#show', :as => :show_company
@@ -17,7 +20,6 @@ Titleloans::Application.routes.draw do
   
   
   devise_for :users
-  resources :companies
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

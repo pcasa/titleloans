@@ -1,8 +1,8 @@
 <%= form_for [current_company, @customer] do |f| %>
   <%= f.error_messages %>
   <p>
-  	<% if !current_user.is? :admin %>
-	  <strong>Assigned Company is</strong> - <%= f.collection_select(:assigned_company_id, @companies, :id, :name, :prompt => "Select Main Company") %>
+  	<% if current_user.is? :admin %>
+	  <strong>Assigned Company is</strong> - <%= f.collection_select(:company_id, Company.all, :id, :name, :prompt => "Select Main Company") %>
 	<% else %>
 	  <%= f.hidden_field :company_id %>
 	<% end %>
@@ -40,8 +40,16 @@
     <%= f.text_field :zipcode %>
   </p>
   <p>
-    <%= f.label :full_address %><br />
-    <%= f.text_field :full_address %>
+    Customer Height<br />
+    <%= f.text_field :c_height %>
+  </p>
+  <p>
+    <%= f.label :gender %><br />
+    <%= f.text_field :gender %>
+  </p>
+  <p>
+    <%= f.label :race %><br />
+    <%= f.text_field :race %>
   </p>
   <p><%= f.submit %></p>
 <% end %>

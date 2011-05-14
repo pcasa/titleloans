@@ -8,7 +8,7 @@ class TitleLoan < ActiveRecord::Base
   has_many :orders
   
   
-    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance
+    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date
     
     validates_presence_of :customer_id, :loan_amount, :vin, :message => "can't be blank", :if => Proc.new { |loan| loan.parent_id.blank? }
     validates_numericality_of :year, :message => "is not a number", :if => Proc.new { |loan| loan.parent_id.blank? }
@@ -18,7 +18,15 @@ class TitleLoan < ActiveRecord::Base
     
     
   def set_base_amount
-    self.base_amount = (loan_amount + previous_balance)
+    if parent_id.blank?
+      # add $18 for title fees
+      y = 18
+    else
+      y = 0
+    end
+    self.base_amount = (loan_amount + previous_balance + y)
+    x = loan_amount
+    self.loan_amount = (x + previous_balance + y)
   end
   
   def check_if_parent
@@ -48,6 +56,15 @@ class TitleLoan < ActiveRecord::Base
     else
       payment_should_be = (base_amount * 0.10)
     end  
+    return payment_should_be.ceil
+  end
+  
+  def estimate_payments(number)
+    if ((base_amount <= 1499.99) && number <= 3) || ((base_amount == 1500..1999.99) && number <= 2) || ((base_amount == 2000..2999.99) && number <= 1)
+      payment_should_be = (base_amount * 0.15)
+    else
+      payment_should_be = (base_amount * 0.10)
+    end
     return payment_should_be
   end
   

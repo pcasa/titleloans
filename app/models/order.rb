@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-    attr_accessible :company_id, :customer_id, :title_loan_id, :loan_payment, :amount_paid
+    attr_accessible :company_id, :customer_id, :title_loan_id, :loan_payment, :amount_paid, :created_at
     
     belongs_to :company, :class_name => "Company", :foreign_key => "company_id"
     belongs_to :customer, :class_name => "Customer", :foreign_key => "customer_id"

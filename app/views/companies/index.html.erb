@@ -21,6 +21,7 @@
       <td><%= company.city %></td>
       <td><%= company.state %></td>
       <td><%= company.zipcode %></td>
+      <td><%= link_to "Go To", show_company_path(company) %></td>
       <td><%= link_to "Show", company %></td>
       <td><%= link_to "Edit", edit_company_path(company) %></td>
       <td><%= link_to "Destroy", company, :confirm => 'Are you sure?', :method => :delete %></td>
