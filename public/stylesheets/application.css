@@ -129,8 +129,18 @@ background: linear-gradient(#2e7938, #39b652);
 	height: 90px;
 }
 
+#logo {
+	width: 50%;
+	display: inline-block;
+	float: left;
+	font-size: 180%;
+	height: 35px;
+	padding: 5px 0;
+	margin-left: 40px;
+}
+
 #user_nav {
-	width: 100%;
+	float: right;
 	text-align: right;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -140,7 +150,8 @@ background: linear-gradient(#2e7938, #39b652);
 }
 
 #menu {
-	
+	display: inline-block;
+	width: 100%;
 	list-style-type: none;
 	margin: 5px 0 10px;
 	padding: 0;
