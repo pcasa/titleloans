@@ -1,23 +1,5 @@
 <% title "Orders" %>
 
-<table>
-  <tr>
-    <th>Company</th>
-    <th>Customer</th>
-    <th>Title Loan</th>
-    <th>Amount Paid</th>
-  </tr>
-  <% for order in @orders %>
-    <tr>
-      <td><%= order.company_id %></td>
-      <td><%= order.customer_id %></td>
-      <td><%= order.title_loan_id %></td>
-      <td><%= order.amount_paid %></td>
-      <td><%= link_to "Show", [current_company, order] %></td>
-      <td><%= link_to "Edit", edit_company_order_path(current_company, order) %></td>
-      <td><%= link_to "Destroy", [current_company, order], :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
+<div id="orders"><%= render 'orders' %></div>
 
-<p><%= link_to "New Order", new_company_order_path(current_company, order) %></p>
+

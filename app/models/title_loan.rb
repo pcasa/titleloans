@@ -7,17 +7,20 @@ class TitleLoan < ActiveRecord::Base
   
   has_many :orders
   has_many :photos
+  has_many :tasks, :as => :asset, :dependent => :destroy
+  has_many :comments, :as => :commentable
   
   
     attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date, :photos_attributes, :photo_attributes
     
     validates_presence_of :customer_id, :loan_amount, :vin, :message => "can't be blank", :if => Proc.new { |loan| loan.parent_id.blank? }
+    validates_presence_of :due_date, :on => :update, :message => "can't be blank"
     validates_numericality_of :year, :message => "is not a number", :if => Proc.new { |loan| loan.parent_id.blank? }
     accepts_nested_attributes_for :photos, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
     
     
     
-    before_create :set_base_amount, :check_if_parent
+    before_create :set_base_amount, :check_if_parent, :set_due_date
     
     
   def set_base_amount
@@ -43,6 +46,18 @@ class TitleLoan < ActiveRecord::Base
       parent.update_attribute(:closed_date, Time.now)
     end
   end
+  
+  def set_due_date
+    if Date.today.day >= 29
+      y = Date.today.year
+      m = Date.today.next_month.month
+      d = 28
+      self.due_date = Date.new(y, m, d)
+    else
+      self.due_date = Date.today.next_month
+    end
+  end
+  
      
     
   def payment
@@ -68,7 +83,7 @@ class TitleLoan < ActiveRecord::Base
     else
       payment_should_be = (base_amount * 0.10)
     end
-    return payment_should_be
+    return payment_should_be.ceil
   end
   
     

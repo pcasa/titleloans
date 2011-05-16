@@ -63,6 +63,7 @@ zip = Faker::Address.zip
 User.create!(
 :firstname => 'admin',
 :lastname => 'admin',
+:username => 'admin',
 :email => 'admin@admin.com',
 :password => "123456",
 :password_confirmation => "123456",

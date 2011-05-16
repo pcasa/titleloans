@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   def index
-    @orders = Order.all
+    @search = current_company.orders.search(params[:search])
+    @orders = @search.relation.paginate(:page => params[:page], :per_page => 25, :order => 'id DESC')
   end
 
   def show

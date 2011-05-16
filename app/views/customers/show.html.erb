@@ -57,8 +57,8 @@
 	</div>
 	<div id="titles">
 		<% if !@customer.title_loans.blank? %>
-		  <% for title in @customer.title_loans %>
-		    <%= title.vin %> with a balance of <%= number_to_currency(title.loan_amount) %> and <%= title.payments_made %> payments made.  <%= link_to "Make a Payment", new_company_order_path(current_company, :customer_id => @customer.id, :title_loan_id => title.id)%><br />
+		  <% for title in @customer.title_loans.order("id DESC") %>
+		    <%= link_to title.vin, [current_company, title] %> with a balance of <%= number_to_currency(title.loan_amount) %> and <%= title.payments_made %> payments made.  <%= link_to "Make a Payment", new_company_order_path(current_company, :customer_id => @customer.id, :title_loan_id => title.id) if title.child.blank? %><br />
 		  <% end %>
 		<% else %>
 		No Title Loans for Customer

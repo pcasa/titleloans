@@ -1,0 +1,40 @@
+<% title "Task" %>
+
+<p>
+  <strong>User:</strong>
+  <%= @task.user_id %>
+</p>
+<p>
+  <strong>Assigned To:</strong>
+  <%= @task.assigned_to %>
+</p>
+<p>
+  <strong>Completed By:</strong>
+  <%= @task.completed_by %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</p>
+<p>
+  <strong>Asset:</strong>
+  <%= @task.asset_id %>
+</p>
+<p>
+  <strong>Asset Type:</strong>
+  <%= @task.asset_type %>
+</p>
+<p>
+  <strong>Category:</strong>
+  <%= @task.category %>
+</p>
+<p>
+  <strong>Due At:</strong>
+  <%= @task.due_at %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_task_path(@task) %> |
+  <%= link_to "Destroy", @task, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", tasks_path %>
+</p>

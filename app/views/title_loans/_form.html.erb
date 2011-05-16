@@ -1,5 +1,7 @@
+<%= content_for :head do %>
 <%= stylesheet_link_tag "jquery-ui", "uploadify" %>
 <%= javascript_include_tag 'jquery.uploadify', 'swfobject' %>
+<% end %>
 <% session_key_name = Rails.application.config.session_options[:key] %>
 
 
@@ -58,10 +60,12 @@
     <%= f.label :base_amount %><br />
     <%= f.text_field :base_amount %>
   </p>
+<% unless @title_loan.new_record? %>
 <p>
     <%= f.label :due_date %><br />
-    <%= f.text_field :due_date %>
+    <%= f.text_field :due_date, :class => "date-picker" %>
   </p>
+<% end %>
 <div id="photos">
 <% if !@title_loan.photos.blank? %>
   <% for photo in @title_loan.photos %>
@@ -69,9 +73,10 @@
   <% end %>
 <% end %>
 
-
+<% unless @title_loan.new_record? %>
 	<%= fields_for Photo.new do |f| %><br />
 	<%= f.file_field :image, :rel => company_title_loan_photos_path(current_company, @title_loan)%>
+<% end %>
 <% end %>
 </div>
 <p><%= f.submit %></p>

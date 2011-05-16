@@ -2,6 +2,7 @@
 // This file is automatically included by javascript_include_tag :defaults
 
 $(document).ready(function(){
+	
 	$("#tabs").tabs({
 		cache:true,
 		   load: function (e, ui) {
@@ -18,6 +19,12 @@ $(document).ready(function(){
 				// $panel.css({float: 'none'});
 		     }
 		    }
-	});		
+	});	
+		
 	$('#tabs ul li a').click(function () {location.hash = $(this).attr('href');});
+	$('.date-picker').datepicker({ dateFormat: 'M d yy' });
+	$('.datetime-picker, .task-datetime').datetimepicker({ dateFormat: 'M d yy', ampm: true });
+	
+	
+	
 });

@@ -4,8 +4,12 @@
 <% title "Title Loan" %>
 <% session_key_name = Rails.application.config.session_options[:key] %>
 <p>
-  <strong>Vin:</strong>
+  <strong>Customer:</strong>
   <%= @title_loan.customer.full_name unless @title_loan.customer_id.blank?  %>
+</p>
+<p>
+  <strong>Vin:</strong>
+  <%= @title_loan.vin  %>
 </p>
 <p>
   <strong>Tag:</strong>

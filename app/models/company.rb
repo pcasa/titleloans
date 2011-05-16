@@ -1,10 +1,13 @@
 class Company < ActiveRecord::Base
   has_friendly_id :name, :use_slug => true
   
+  has_many :orders
   has_many :titles
   has_many :employmentships, :dependent => :destroy
   has_many :users, :through => :employmentships
   has_many :customers
+  has_many :tasks, :as => :asset, :dependent => :destroy
+  has_many :comments, :as => :commentable
   
   attr_accessible :name, :cached_slug, :phone, :street1, :street2, :city, :state, :zipcode, :full_address
     

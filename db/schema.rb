@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516030313) do
+ActiveRecord::Schema.define(:version => 20110516131357) do
 
   create_table "comments", :force => true do |t|
     t.string    "commentable_type"
@@ -94,6 +94,23 @@ ActiveRecord::Schema.define(:version => 20110516030313) do
   add_index "slugs", ["name", "sluggable_type", "sequence", "scope"], :name => "index_slugs_on_n_s_s_and_s", :unique => true
   add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
 
+  create_table "tasks", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "assigned_to"
+    t.integer  "completed_by"
+    t.string   "name"
+    t.integer  "asset_id"
+    t.string   "asset_type"
+    t.string   "category"
+    t.date     "due_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasks", ["asset_id", "asset_type"], :name => "index_tasks_on_asset_id_and_asset_type"
+  add_index "tasks", ["deleted_at"], :name => "index_tasks_on_deleted_at"
+
   create_table "title_loans", :force => true do |t|
     t.integer  "customer_id"
     t.integer  "company_id"
@@ -119,33 +136,33 @@ ActiveRecord::Schema.define(:version => 20110516030313) do
   add_index "title_loans", ["company_id"], :name => "index_title_loans_on_company_id"
 
   create_table "users", :force => true do |t|
-    t.string    "firstname"
-    t.string    "lastname"
-    t.string    "email"
-    t.string    "street1"
-    t.string    "street2"
-    t.string    "city"
-    t.string    "state"
-    t.string    "zipcode"
-    t.string    "full_address"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.string    "encrypted_password",   :limit => 128,                :null => false
-    t.string    "password_salt",                                      :null => false
-    t.string    "reset_password_token"
-    t.string    "remember_token"
-    t.timestamp "remember_created_at"
-    t.integer   "sign_in_count",                       :default => 0
-    t.timestamp "current_sign_in_at"
-    t.timestamp "last_sign_in_at"
-    t.string    "current_sign_in_ip"
-    t.string    "last_sign_in_ip"
-    t.string    "roles",                :limit => 128
-    t.integer   "roles_mask"
+    t.string   "firstname"
+    t.string   "lastname"
+    t.string   "email"
+    t.string   "street1"
+    t.string   "street2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
+    t.string   "full_address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "encrypted_password",   :limit => 128,                :null => false
+    t.string   "password_salt",                                      :null => false
+    t.string   "reset_password_token"
+    t.string   "remember_token"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",                       :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "roles_mask"
+    t.string   "username"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  add_index "users", ["roles"], :name => "index_users_on_roles"
+  add_index "users", ["username"], :name => "index_users_on_username"
 
 end

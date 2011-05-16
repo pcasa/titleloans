@@ -1,6 +1,8 @@
 Titleloans::Application.routes.draw do
   
   
+  resources :tasks
+
   resources :companies
   
   match '/companies' => 'companies#index'

@@ -9,12 +9,19 @@ class Order < ActiveRecord::Base
   before_destroy :put_back_to_titles
   
   validates_presence_of :amount_paid, :message => "can't be blank"
+  validate :min_amount_paid, :on => :create
   
   def set_loan_payment
     if title_loan.payment_should_be < self.amount_paid 
       self.loan_payment = (self.amount_paid - title_loan.payment_should_be)
     else 
       self.loan_payment = 0.00
+    end
+  end
+  
+  def min_amount_paid
+    if !amount_paid.blank? && !title_loan_id.blank? && amount_paid < title_loan.payment_should_be
+      errors[:base] << "Minimal Amount Not Paid."
     end
   end
   

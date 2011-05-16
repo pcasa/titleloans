@@ -137,6 +137,7 @@ background: linear-gradient(#2e7938, #39b652);
 	height: 35px;
 	padding: 5px 0;
 	margin-left: 40px;
+	font-weight: bold;
 }
 
 #user_nav {
