@@ -16,7 +16,9 @@ Titleloans::Application.routes.draw do
     resources :title_loans do
       resources :photos, :only => [:create, :destroy]
     end
-    resources :customers
+    resources :customers do
+      resources :addresses
+    end
     resources :homes
     resources :comments
     resources :users

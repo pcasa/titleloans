@@ -1,6 +1,6 @@
 <% title @customer.full_name %>
 
-
+<div id="customer">
 <div id="tabs">
 	<ul>
 		<li><a href="#info">Customer Info</a></li>
@@ -20,34 +20,27 @@
 		  <%= @customer.email %>
 		</p>
 		<p>
-		  <strong>Street1:</strong>
-		  <%= @customer.street1 %>
-		</p>
-		<p>
-		  <strong>Street2:</strong>
-		  <%= @customer.street2 %>
-		</p>
-		<p>
-		  <strong>City:</strong>
-		  <%= @customer.city %>
-		</p>
-		<p>
-		  <strong>State:</strong>
-		  <%= @customer.state %>
-		</p>
-		<p>
-		  <strong>Zipcode:</strong>
-		  <%= @customer.zipcode %>
-		</p>
-		<p>
-		  <strong>Full Address:</strong>
+		  <strong>Current Address:</strong><br />
 		  <%= @customer.full_address.html_safe %>
 		</p>
-
 		
-
-
-
+		<% unless @customer.addresses.blank? %>
+		<br /><hr /	>
+		<strong>Previous Addresses Used:</strong><br />
+			<table width="100%">
+				<% @customer.addresses.in_groups_of(3, false) do |grouped_address| %>
+				    <tr>
+					<% grouped_address.each do |address| %>
+						<td><%= address.street1 %><br />
+						<% unless address.street2.blank? %><%= address.street2 %><br /><% end %>
+						<%= address.city %>, <%= address.state %> <%= address.zipcode %><br />
+						<%= link_to "Remove",  [current_company, @customer, address], :confirm => 'Are you sure?', :method => :delete %></td>
+					<% end %>
+					</tr>
+				<% end %>
+			</table>
+		<% end %>
+		<hr>
 		<p>
 		  <%= link_to "Edit", edit_company_customer_path(current_company, @customer) %> |
 		  <%= link_to "Destroy", [current_company, @customer], :confirm => 'Are you sure?', :method => :delete %> |
@@ -57,17 +50,18 @@
 	</div>
 	<div id="titles">
 		<% if !@customer.title_loans.blank? %>
+		<div id="customer-titles">
 		  <% for title in @customer.title_loans.order("id DESC") %>
-		    <%= link_to title.vin, [current_company, title] %> with a balance of <%= number_to_currency(title.loan_amount) %> and <%= title.payments_made %> payments made.  <%= link_to "Make a Payment", new_company_order_path(current_company, :customer_id => @customer.id, :title_loan_id => title.id) if title.child.blank? %><br />
+		    <%= render :partial => "title_show", :locals => {:title => title }%>
 		  <% end %>
+		</div>
 		<% else %>
 		No Title Loans for Customer
-		<% end %>
-		
+		<% end %>			
 		<p>
 			<%= link_to "Create Title", new_company_title_loan_path(:customer_id => @customer.id) %>
 		</p>
 	</div>
-	
+</div>	
 </div>
 

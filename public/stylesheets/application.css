@@ -314,6 +314,64 @@ position:relative;
 	padding: 10px;
 }
 
+#customer-titles {
+	display: inline-block;
+	width: 100%;
+}
+
+#customer-titles .title {
+	margin-top: 5px;
+	border-bottom: 1px solid #888;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	margin-bottom: 5px;
+}
+
+
+/*** Photos ***/
+#photos {
+	display: inline-block;
+	width: 100%;
+}
+
+#photos .photo {
+	width: 100px;
+	height: 120px;
+	display: inline-block;
+	float: left;
+	background-color: #FFF;
+	margin-right: 10px;
+	border: 1px solid #888;
+	margin-top: 10px;
+	position: relative;
+	padding: 10px;
+	-moz-box-shadow: 0 0 5px #888;
+-webkit-box-shadow: 0 0 5px#888;
+box-shadow: 0 0 5px #888;	
+}
+
+#photos .photo a.img {
+	display: block;
+	margin: 0 auto;
+	position: absolute;
+	top: 10px;
+}
+
+
+
+#photos .photo a {
+	position: absolute;
+	bottom: 5px;
+	display: block;
+	width: 95px;
+	text-align: center;
+}
+
+/*** Title Loans ***/
+#photo-btn {
+	display: inline-block;
+	width: 100%;
+}
 
 /*** Orders ***/
 .silverBoarderd {

@@ -3,6 +3,7 @@ class Customer < ActiveRecord::Base
   has_many :orders
   has_many :comments, :as => :commentable, :dependent => :destroy
   has_many :tasks, :as => :asset, :dependent => :destroy
+  has_many :addresses, :as => :addressable, :dependent => :destroy
   
   belongs_to :company, :class_name => "Company", :foreign_key => "company_id"
   
@@ -14,6 +15,7 @@ class Customer < ActiveRecord::Base
   
   before_validation(:on => :create){ make_customer_number }
   before_save :update_full_address
+  before_update :check_if_address_changed
   
   validates_length_of :c_height, :gender, :within => 3..16, :message => "must be present"
   validates_length_of :race, :within => 3..64, :message => "must be present"
@@ -49,6 +51,12 @@ class Customer < ActiveRecord::Base
     end
     citystatezip = self.city + ", " + self.state + " " + self.zipcode
     self.full_address = street + citystatezip
+  end
+  
+  def check_if_address_changed
+    if self.street1_changed? || self.street2_changed? || self.city_changed? || self.state_changed? || self.zipcode_changed?
+      Address.create!(:street1 => self.street1_was, :street2 => self.street2_was, :city => self.city_was, :state => self.state_was, :zipcode => self.zipcode_was, :addressable_type => "Customer", :addressable_id => self.id, :full_address => self.full_address, :address_type => "Customer")
+    end
   end
   
 end

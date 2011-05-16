@@ -66,19 +66,19 @@
     <%= f.text_field :due_date, :class => "date-picker" %>
   </p>
 <% end %>
-<div id="photos">
-<% if !@title_loan.photos.blank? %>
-  <% for photo in @title_loan.photos %>
-    <%= render :partial => 'photos/photo', :locals => {:photo => photo }%>
-  <% end %>
-<% end %>
+	<div id="photos">
+	<% if !@title_loan.photos.blank? %>
+	  <% for photo in @title_loan.photos %>
+	    <%= render :partial => 'photos/photo', :locals => {:photo => photo }%>
+	  <% end %>
+	<% end %>
 
-<% unless @title_loan.new_record? %>
+	</div>
+	<div id="photo-btn">
 	<%= fields_for Photo.new do |f| %><br />
-	<%= f.file_field :image, :rel => company_title_loan_photos_path(current_company, @title_loan)%>
-<% end %>
-<% end %>
-</div>
+	<%= f.file_field :image, :rel => company_title_loan_photos_path(current_company, @title_loan) if !@title_loan.photos.blank?%>
+	<% end %>
+	</div>
 <p><%= f.submit %></p>
 <% end %>
 

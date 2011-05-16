@@ -204,12 +204,6 @@
 	<tr>
 		<td>
 			<p>
-			    <%= builder.label :previous_balance %><br />
-			    <%= builder.text_field :previous_balance %>
-			</p>
-		</td>
-		<td>
-			<p>
 			    <%= builder.label :loan_amount %><br />
 			    <%= builder.text_field :loan_amount %>
 			</p>
@@ -220,20 +214,15 @@
 			    <%= builder.text_field :payments_made %>
 		    </p>
 		</td>
+		<td>
+			<p>
+			    <%= builder.hidden_field :previous_balance %>
+			</p>
+		</td>
 	</tr>
 </table>
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
-		  
 	<% end %>
-  <p><%= f.submit %></p>
+  <p><%= f.submit :class => "smallbtn green" %></p>
 <% end %>
 
 

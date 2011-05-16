@@ -1,5 +1,7 @@
-<%= stylesheet_link_tag "jquery-ui", "uploadify" %>
-<%= javascript_include_tag 'jquery.uploadify', 'swfobject' %>
+<%= content_for :head do %>
+	<%= javascript_include_tag 'jquery.mousewheel', 'jquery.fancybox', 'jquery.uploadify', 'swfobject' %>
+	<%= stylesheet_link_tag "jquery-ui", "uploadify" %>
+<% end %>
 
 <% title "Title Loan" %>
 <% session_key_name = Rails.application.config.session_options[:key] %>
@@ -41,7 +43,7 @@
 </p>
 <p>
   <strong>Loan Amount:</strong>
-  <%= @title_loan.loan_amount %>
+  <%= number_to_currency(@title_loan.loan_amount) %>
 </p>
 <p>
   <strong>Payments Made:</strong>
@@ -64,12 +66,13 @@
   <% end %>
 <% end %>
 
-
-	<%= fields_for Photo.new do |f| %><br />
-	<%= f.file_field :image, :rel => company_title_loan_photos_path(current_company, @title_loan)%>
-<% end %>
 </div>
 
+<div id="photo-btn">
+<%= fields_for Photo.new do |f| %><br />
+<%= f.file_field :image, :rel => company_title_loan_photos_path(current_company, @title_loan)%>
+<% end %>
+</div>
 <p>
   <%= link_to "Edit", edit_company_title_loan_path(current_company, @title_loan) %> |
   <%= link_to "Destroy", [current_company, @title_loan], :confirm => 'Are you sure?', :method => :delete %> |
@@ -81,7 +84,12 @@
 
 
 <%= content_for :scripts do %>
+
 <script>
+	$("a[rel=photo_group]").fancybox({
+			'transitionIn'	:	'elastic',
+			'transitionOut'	:	'elastic'
+		});
   //<![CDATA[
     var upload_params = {
       '<%= "#{session_key_name}" %>' : encodeURIComponent('<%= u cookies[session_key_name] %>'),

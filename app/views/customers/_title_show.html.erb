@@ -1,0 +1,26 @@
+<%= div_for(title, :class => "title") do %>
+	<%= link_to title.vin, [current_company, title] %> with a balance of <%= number_to_currency(title.loan_amount) %> and <%= title.payments_made %> payments made.  <%= link_to "Make a Payment", new_company_order_path(current_company, :customer_id => @customer.id, :title_loan_id => title.id) if title.child.blank? %><br />
+	<div id="photos">
+	<% if !title.photos.blank? %>
+	  <% for photo in title.photos %>
+	    <%= div_for(photo, :class => "photo") do %>
+			<%= link_to image_tag(photo.image_url(:thumb)), photo.image_url, :class => "img", :rel => "photo_group" if photo.image? %>
+			<%= link_to "Delete", [current_company, title, photo], :method => :delete, :confirm => "Are you sure?", :remote => :true %>
+		<% end %>
+	  <% end %>
+	<% end %>
+	</div>
+<% end %>
+
+<%= content_for :head do %>
+	<%= javascript_include_tag 'jquery.mousewheel', 'jquery.fancybox' %>
+<% end %>
+
+<%= content_for :scripts do %>
+<script>
+	$("a[rel=photo_group]").fancybox({
+			'transitionIn'	:	'elastic',
+			'transitionOut'	:	'elastic'
+		});
+</script>
+<% end %>

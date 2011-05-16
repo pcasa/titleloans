@@ -1,6 +1,3 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
-
 $(document).ready(function(){
 	
 	$("#tabs").tabs({
@@ -23,8 +20,9 @@ $(document).ready(function(){
 		
 	$('#tabs ul li a').click(function () {location.hash = $(this).attr('href');});
 	$('.date-picker').datepicker({ dateFormat: 'M d yy' });
-	$('.datetime-picker, .task-datetime').datetimepicker({ dateFormat: 'M d yy', ampm: true });
 	
-	
+	// to use datetimepicker put it on page.
+	// conflicts with fancybox...
+	// $('.datetime-picker').datetimepicker({ dateFormat: 'M d yy', ampm: true });
 	
 });

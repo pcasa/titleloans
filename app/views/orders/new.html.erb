@@ -2,10 +2,7 @@
 
 <%= form_for [current_company, @order] do |f| %>
   <%= f.error_messages %>
-  <p>
-    <%= f.label :company_id %><br />
-    <%= f.text_field :company_id %>
-  </p>
+    <%= f.hidden_field :company_id %>
   <p>
     Customer Info<br />
     <%= f.collection_select :customer_id, Customer.all(:order => 'lastname, firstname'), :id, :full_name %>

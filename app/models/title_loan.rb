@@ -6,7 +6,7 @@ class TitleLoan < ActiveRecord::Base
   belongs_to :parent, :class_name => "TitleLoan", :foreign_key => "parent_id"
   
   has_many :orders
-  has_many :photos
+  has_many :photos, :dependent => :destroy
   has_many :tasks, :as => :asset, :dependent => :destroy
   has_many :comments, :as => :commentable
   
@@ -21,6 +21,7 @@ class TitleLoan < ActiveRecord::Base
     
     
     before_create :set_base_amount, :check_if_parent, :set_due_date
+    after_create :check_if_parent_had_pictures
     
     
   def set_base_amount
@@ -44,6 +45,16 @@ class TitleLoan < ActiveRecord::Base
       self.color = parent.color
       self.year = parent.year
       parent.update_attribute(:closed_date, Time.now)
+    end
+  end
+  
+  def check_if_parent_had_pictures
+    if !parent.photos.blank?
+      parent.photos.each do |p|
+        # Photo.create!(:title_loan_id => self.id, :image => p.image)
+        # p.destroy
+        p.update_attribute(:title_loan_id, self.id)
+      end
     end
   end
   
