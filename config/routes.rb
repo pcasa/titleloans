@@ -11,7 +11,9 @@ Titleloans::Application.routes.draw do
   match '/companies/:id/destroy' => 'companies#destroy', :as => :delete_company  
   scope '/:company_id', :as => :company do 
     resources :orders
-    resources :title_loans
+    resources :title_loans do
+      resources :photos, :only => [:create, :destroy]
+    end
     resources :customers
     resources :homes
     resources :comments

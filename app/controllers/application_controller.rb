@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  
+  
   helper_method :current_company, :is_employed_at?
+  before_filter :user_belongs_to_company
   
   
   def current_company
@@ -25,28 +28,28 @@ class ApplicationController < ActionController::Base
   
   protected
 
- #  def user_belongs_to_company
- #    unless !user_signed_in? || current_user.roles == ["admin"] || params[:company_id] == nil 
- #      if current_company.present? && !current_user.company_ids.include?(current_company.id)
- #        redirect_to root_url, :alert => "You don't belong there!"
- #      end
- #    end
- #  end
- #
- #  def after_sign_in_path_for(resource_or_scope)
- #    if resource_or_scope.is_a?(User) 
- #      if resource_or_scope.role? :banned
- #         destroy_user_session_path
- #      else
- #       if resource_or_scope.companies.size == 1
- #         company_dashboard_url(resource_or_scope.companies.first)
- #       else
- #         root_url
- #       end
- #      end
- #    else
- #      super
- #    end
- #  end
+   def user_belongs_to_company
+     unless !user_signed_in? || current_user.is?(:admin) || params[:company_id] == nil 
+       if current_company.present? && !current_user.company_ids.include?(current_company.id)
+         redirect_to root_url, :alert => "You don't belong there!"
+       end
+     end
+   end
+
+   def after_sign_in_path_for(resource_or_scope)
+     if resource_or_scope.is_a?(User) 
+       if resource_or_scope.is? :banned
+          destroy_user_session_path
+       else
+        if resource_or_scope.companies.size == 1
+          show_company_path(resource_or_scope.companies.first)
+        else
+          root_url
+        end
+       end
+     else
+       super
+     end
+   end
 
 end

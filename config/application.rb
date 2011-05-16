@@ -11,6 +11,12 @@ module Titleloans
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    
+    
+    # Add additional load paths for your own custom dirs
+    %w(observers mailers middleware).each do |dir|
+      config.autoload_paths << "#{config.root}/app/#{dir}"
+    end
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)

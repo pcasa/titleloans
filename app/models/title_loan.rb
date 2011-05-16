@@ -6,12 +6,15 @@ class TitleLoan < ActiveRecord::Base
   belongs_to :parent, :class_name => "TitleLoan", :foreign_key => "parent_id"
   
   has_many :orders
+  has_many :photos
   
   
-    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date
+    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date, :photos_attributes, :photo_attributes
     
     validates_presence_of :customer_id, :loan_amount, :vin, :message => "can't be blank", :if => Proc.new { |loan| loan.parent_id.blank? }
     validates_numericality_of :year, :message => "is not a number", :if => Proc.new { |loan| loan.parent_id.blank? }
+    accepts_nested_attributes_for :photos, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
+    
     
     
     before_create :set_base_amount, :check_if_parent

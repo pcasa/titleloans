@@ -1,5 +1,8 @@
-<% title "Title Loan" %>
+<%= stylesheet_link_tag "jquery-ui", "uploadify" %>
+<%= javascript_include_tag 'jquery.uploadify', 'swfobject' %>
 
+<% title "Title Loan" %>
+<% session_key_name = Rails.application.config.session_options[:key] %>
 <p>
   <strong>Vin:</strong>
   <%= @title_loan.customer.full_name unless @title_loan.customer_id.blank?  %>
@@ -50,6 +53,19 @@
 	<%= @title_loan.estimate_payments(1) %>
 </p>
 
+<div id="photos">
+<% if !@title_loan.photos.blank? %>
+  <% for photo in @title_loan.photos %>
+    <%= render :partial => 'photos/photo', :locals => {:photo => photo }%>
+  <% end %>
+<% end %>
+
+
+	<%= fields_for Photo.new do |f| %><br />
+	<%= f.file_field :image, :rel => company_title_loan_photos_path(current_company, @title_loan)%>
+<% end %>
+</div>
+
 <p>
   <%= link_to "Edit", edit_company_title_loan_path(current_company, @title_loan) %> |
   <%= link_to "Destroy", [current_company, @title_loan], :confirm => 'Are you sure?', :method => :delete %> |
@@ -57,3 +73,33 @@
   <%= link_to "Invoice", new_company_order_path(current_company, :title_loan_id => @title_loan.id, :customer_id => @title_loan.customer_id) %> | 
   <%= link_to "Give Money", new_company_title_loan_path(current_company, :parent_id => @title_loan.id, :customer_id => @title_loan.customer_id)%>
 </p>
+
+
+
+<%= content_for :scripts do %>
+<script>
+  //<![CDATA[
+    var upload_params = {
+      '<%= "#{session_key_name}" %>' : encodeURIComponent('<%= u cookies[session_key_name] %>'),
+      'authenticity_token' : encodeURIComponent('<%= u form_authenticity_token %>'),
+      '_http_accept': 'application/javascript'
+    };
+    var url = $('input#photo_image').attr('rel');
+    $('input#photo_image').uploadify({
+      'uploader'     : '/assets/uploadify.swf',
+      'script'       : url,
+      'fileDataName' : 'photo[image]',
+      'fileExt'      : '*.png;*.jpg;*.gif',
+      'cancelImg'    : '/images/cancel.png',
+      'multi'        : true,
+      'scriptData'   : upload_params,
+      'auto'         : true,
+      'onComplete'   : function(e, id, obj, response, data) {
+        $('#photos').append(response);
+      }
+    });
+  //]]>
+</script>
+<% end %>
+
+

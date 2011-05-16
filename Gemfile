@@ -9,6 +9,9 @@ gem 'cancan'
 gem 'friendly_id', '~> 3.2.1'
 gem 'meta_search'
 gem 'will_paginate', '~> 3.0.pre2'
+gem 'carrierwave'
+gem 'rmagick'
+gem 'mini_magick'
 
 
 gem 'populator'
@@ -19,7 +22,10 @@ gem 'faker'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'pg'
-gem 'mysql'
+
+group :production do
+ # gem 'mysql'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'

@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  title_loan_id: 1
+  image: MyString
+
+two:
+  title_loan_id: 1
+  image: MyString

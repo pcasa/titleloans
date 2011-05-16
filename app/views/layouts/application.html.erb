@@ -10,6 +10,7 @@
   <body>
 	<div id="header_container">
 		<div id="header">
+		<div id="logo">Atlanta Title Loans</div>
 		<%= render :partial => "layouts/usernav" %>
 			<%= render :partial => "layouts/menu" %>
 
@@ -27,5 +28,6 @@
 		
       <%= yield %>
     </div>
+	<%= yield(:scripts) %>
   </body>
 </html>
