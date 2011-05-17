@@ -9,36 +9,27 @@
   <%= @user.lastname %>
 </p>
 <p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+<p>
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
 <p>
-  <strong>Street1:</strong>
-  <%= @user.street1 %>
-</p>
-<p>
-  <strong>Street2:</strong>
-  <%= @user.street2 %>
-</p>
-<p>
-  <strong>City:</strong>
-  <%= @user.city %>
-</p>
-<p>
-  <strong>State:</strong>
-  <%= @user.state %>
-</p>
-<p>
-  <strong>Zipcode:</strong>
-  <%= @user.zipcode %>
-</p>
-<p>
-  <strong>Full Address:</strong>
-  <%= @user.full_address %>
+  <strong>Full Address:</strong><br />
+  <%= @user.full_address.html_safe %>
 </p>
 
 <p>
-  <%= link_to "Edit", edit_user_path(@user) %> |
-  <%= link_to "Destroy", @user, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", users_path %>
+	<strong>Assigned to:</strong><br />
+	<% @user.companies.each do |company| %>
+		<%= link_to company.name, company_dashboard_path(company)%>
+	<% end %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_company_user_path(current_company, @user) %> |
+  <%= link_to "Destroy", [current_company, @user], :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", company_users_path %>
 </p>

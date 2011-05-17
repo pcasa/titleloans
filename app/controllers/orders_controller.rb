@@ -15,6 +15,7 @@ class OrdersController < ApplicationController
     @order.title_loan_id = params[:title_loan_id] if !params[:title_loan_id].blank?
     @title_loan = TitleLoan.find(params[:title_loan_id]) if !params[:title_loan_id].blank?
     @order.loan_payment = sprintf("%.2f",@title_loan.payment) if !params[:title_loan_id].blank?
+    @order.user_id = current_user.id
   end
 
   def create

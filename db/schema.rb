@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110516181346) do
+ActiveRecord::Schema.define(:version => 20110517131957) do
 
   create_table "addresses", :force => true do |t|
     t.string   "street1",          :limit => 128
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20110516181346) do
     t.decimal   "amount_paid"
     t.timestamp "created_at"
     t.timestamp "updated_at"
+    t.integer   "user_id"
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_on_company_id"
@@ -123,9 +124,11 @@ ActiveRecord::Schema.define(:version => 20110516181346) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "company_id"
   end
 
   add_index "tasks", ["asset_id", "asset_type"], :name => "index_tasks_on_asset_id_and_asset_type"
+  add_index "tasks", ["company_id", "assigned_to"], :name => "index_tasks_on_company_id_and_assigned_to"
   add_index "tasks", ["deleted_at"], :name => "index_tasks_on_deleted_at"
 
   create_table "title_loans", :force => true do |t|
@@ -148,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20110516181346) do
     t.decimal  "previous_balance",                :default => 0.0
     t.string   "tag_number",       :limit => 16
     t.date     "due_date"
+    t.integer  "user_id"
   end
 
   add_index "title_loans", ["company_id"], :name => "index_title_loans_on_company_id"

@@ -11,9 +11,10 @@ class TitleLoan < ActiveRecord::Base
   has_many :comments, :as => :commentable
   
   
-    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date, :photos_attributes, :photo_attributes
+    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date, :user_id, :photos_attributes, :photo_attributes
     
-    validates_presence_of :customer_id, :loan_amount, :vin, :message => "can't be blank", :if => Proc.new { |loan| loan.parent_id.blank? }
+    validates_presence_of :customer_id, :vin, :message => "can't be blank", :if => Proc.new { |loan| loan.parent_id.blank? }
+    validates_presence_of :loan_amount, :on => :create, :message => "can't be blank"
     validates_presence_of :due_date, :on => :update, :message => "can't be blank"
     validates_numericality_of :year, :message => "is not a number", :if => Proc.new { |loan| loan.parent_id.blank? }
     accepts_nested_attributes_for :photos, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
@@ -21,9 +22,9 @@ class TitleLoan < ActiveRecord::Base
     
     
     before_create :set_base_amount, :check_if_parent, :set_due_date
-    after_create :check_if_parent_had_pictures
+    after_create :check_if_parent_had_pictures, :set_initial_reminder
     
-    
+       
   def set_base_amount
     if parent_id.blank?
       # add $18 for title fees
@@ -49,27 +50,65 @@ class TitleLoan < ActiveRecord::Base
   end
   
   def check_if_parent_had_pictures
-    if !parent.photos.blank?
+    if !parent_id.blank? && !parent.photos.blank?
       parent.photos.each do |p|
-        # Photo.create!(:title_loan_id => self.id, :image => p.image)
-        # p.destroy
         p.update_attribute(:title_loan_id, self.id)
       end
     end
   end
+  
+  #######################################################################################
+  # Initial Due Date set
+  #######################################################################################
   
   def set_due_date
     if Date.today.day >= 29
       y = Date.today.year
       m = Date.today.next_month.month
       d = 28
-      self.due_date = Date.new(y, m, d)
+      x = Date.new(y, m, d)
     else
-      self.due_date = Date.today.next_month
+      x = Date.today.next_month
+    end
+    self.due_date = x
+  end
+  
+  #######################################################################################
+  # Set first reminder
+  #######################################################################################
+  
+  def set_initial_reminder
+    msg = "Call #{customer.full_name} about there payment."
+    Task.create!(:user_id => user_id, :assigned_to => user_id, :name => msg, :asset_id => self.id, :asset_type => self.class, :company_id => company_id, :category => "call", :due_at => due_date - 2.days)
+    clear_parent_tasks unless parent_id.blank?
+  end
+  
+  def clear_parent_tasks
+    parent.tasks.each do |pt|
+      msg = "Took out a new loan.  New title loan id is #{self.id}"
+      pt.mark_completed_and_msg(self.user_id, msg)
     end
   end
   
+  #######################################################################################
+  # Work with tasks after payment made
+  #######################################################################################
+  
+  def schedule_loan_tasks(order)
+    comment = "system note - Made payment on #{order.created_at}"
+    msg = "Call #{customer.full_name} about there payment."
+    new_date = self.due_date.next_month
+    tasks.each do |t|
+      t.mark_completed_and_msg(order.user_id, comment)
+    end
+    self.update_attribute(:due_date, new_date)
+    Task.create!(:user_id => user_id, :assigned_to => user_id, :name => msg, :asset_id => self.id, :asset_type => self.class, :company_id => company_id, :category => "call", :due_at => new_date - 2.days)
+  end
      
+  
+  #######################################################################################
+  # Get payment info depending how many payments have been made
+  #######################################################################################
     
   def payment
     loan_amount / 12
@@ -88,6 +127,18 @@ class TitleLoan < ActiveRecord::Base
     return payment_should_be.ceil
   end
   
+  def late_fees
+    if due_date < Date.today
+      percent = get_percentage(payments_made)
+      p = ((base_amount / 30) * percent).ceil
+      days_late = ((((Date.today.to_time - due_date.to_time) / 60) / 60) / 24)
+      late_fee = p * days_late
+    else
+      late_fee = 0
+    end
+    return late_fee.ceil
+  end
+  
   def estimate_payments(number)
     if ((base_amount <= 1499.99) && number <= 3) || ((base_amount == 1500..1999.99) && number <= 2) || ((base_amount == 2000..2999.99) && number <= 1)
       payment_should_be = (base_amount * 0.15)
@@ -95,6 +146,20 @@ class TitleLoan < ActiveRecord::Base
       payment_should_be = (base_amount * 0.10)
     end
     return payment_should_be.ceil
+  end
+  
+  def get_percentage(payments_made)
+    if ((base_amount <= 1499.99) && payments_made <= 3) || ((base_amount == 1500..1999.99) && payments_made <= 2) || ((base_amount == 2000..2999.99) && payments_made <= 1)
+      percentage_should_be = 0.15
+    else
+      percentage_should_be = 0.10
+    end
+    return percentage_should_be
+  end
+  
+  def estimate_late_payment_fee(est_percent)
+    p = (base_amount / 30) * est_percent
+    return p.ceil
   end
   
     

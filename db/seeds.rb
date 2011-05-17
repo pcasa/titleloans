@@ -37,6 +37,7 @@ Company.delete_all
 puts "Clearing Slugs"
 Slug.delete_all
 
+puts "Clearing Employmentships"
 Employmentship.delete_all
 
 puts "Clearing title loans"

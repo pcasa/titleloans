@@ -1,36 +1,16 @@
-<%= form_for @task do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </p>
-  <p>
-    <%= f.label :assigned_to %><br />
-    <%= f.text_field :assigned_to %>
-  </p>
-  <p>
-    <%= f.label :completed_by %><br />
-    <%= f.text_field :completed_by %>
-  </p>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :asset_id %><br />
-    <%= f.text_field :asset_id %>
-  </p>
-  <p>
-    <%= f.label :asset_type %><br />
-    <%= f.text_field :asset_type %>
-  </p>
-  <p>
-    <%= f.label :category %><br />
-    <%= f.text_field :category %>
-  </p>
-  <p>
-    <%= f.label :due_at %><br />
-    <%= f.date_select :due_at %>
-  </p>
-  <p><%= f.submit %></p>
+<%= semantic_form_for [current_company, @asset, Task.new] do |f| %>
+  <%= f.inputs do %>
+	<%= f.hidden_field :user_id %>
+	<%= f.input :assigned_to, :as => :select, :collection => @users %>
+	<%= f.input :completed_by, :as => :select, :collection => @users %>
+	<%= f.input :company, :as => :select, :collection => Company.all %>
+	<%= f.input :name %>
+	<%= f.input :category, :as => :select, :collection => Task::CATEGORY %>
+	<%= f.input :due_at, :as => :datetime_picker %>
+	<%= f.input :asset_type %>
+	<%= f.input :asset_id %>
+  	<% end %>
+  <%= f.buttons do %>
+    <%= f.commit_button %>
+  <% end %>
 <% end %>

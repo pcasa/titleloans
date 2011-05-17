@@ -135,9 +135,9 @@
 		<td>
 		  	<p>
 			    <%= f.label :gender %><br />
-			    <%= f.select(:state, [
+			    <%= f.select(:gender, [
 					['Male', 'Male'], 
-					['Female', 'Female']], {:prompt => 'Select State'}) %>
+					['Female', 'Female']], {:prompt => 'Select Gender'}) %>
 			</p>
 		</td>
 		<td>
@@ -151,6 +151,8 @@
 
   	<%= f.fields_for :title_loans do |builder| %>
 	<%= builder.hidden_field :customer_id, :value => @customer %>
+	<%= builder.hidden_field :company_id, :value => current_company.id %>
+	<%= builder.hidden_field :user_id, :value => current_user.id %>
 
 <table>
 	<tr>

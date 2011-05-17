@@ -2,61 +2,50 @@
 	<%= javascript_include_tag 'jquery.mousewheel', 'jquery.fancybox', 'jquery.uploadify', 'swfobject' %>
 	<%= stylesheet_link_tag "jquery-ui", "uploadify" %>
 <% end %>
+<% session_key_name = Rails.application.config.session_options[:key] %>
 
 <% title "Title Loan" %>
-<% session_key_name = Rails.application.config.session_options[:key] %>
-<p>
-  <strong>Customer:</strong>
-  <%= @title_loan.customer.full_name unless @title_loan.customer_id.blank?  %>
-</p>
-<p>
-  <strong>Vin:</strong>
-  <%= @title_loan.vin  %>
-</p>
-<p>
-  <strong>Tag:</strong>
-  <%= @title_loan.tag_number %>
-</p>
-<p>
-  <strong>Vin:</strong>
-  <%= @title_loan.vin %>
-</p>
-<p>
-  <strong>Make:</strong>
-  <%= @title_loan.make %>
-</p>
-<p>
-  <strong>Model:</strong>
-  <%= @title_loan.vin_model %>
-</p>
-<p>
-  <strong>Style:</strong>
-  <%= @title_loan.style %>
-</p>
-<p>
-  <strong>Color:</strong>
-  <%= @title_loan.color %>
-</p>
-<p>
-  <strong>Year:</strong>
-  <%= @title_loan.year %>
-</p>
-<p>
-  <strong>Loan Amount:</strong>
-  <%= number_to_currency(@title_loan.loan_amount) %>
-</p>
-<p>
-  <strong>Payments Made:</strong>
-  <%= @title_loan.payments_made %>
-</p>
-<p>
-  <strong>Due Date:</strong>
-  <%= @title_loan.due_date %>
-</p>
+
+
+<table width="100%">
+<tr>
+	<th width="33%">Base Info:</th>
+	<th width="33%">Car Info:</th>
+	<th width="33%">Payment Info:</th>
+</tr>
+<tr valign="TOP">
+	<td>
+		<strong>Due Date:</strong> <%= @title_loan.due_date.strftime('%b %d, %Y') %><br /><br />
+		<strong>Customer:</strong>
+		  <%= link_to @title_loan.customer.full_name, [current_company, @title_loan.customer] unless @title_loan.customer_id.blank?  %><br /><br />
+		<strong>Current Percentage</strong> <%= number_to_percentage((@title_loan.get_percentage(@title_loan.payments_made) * 100), :precision => 0)%>
+		
+	</td>
+	<td>
+		<strong>Vin:</strong> <%= @title_loan.vin  %><br /><br />
+		<strong>Tag:</strong> <%= @title_loan.tag_number %><br /><br />
+		<strong>Make:</strong> <%= @title_loan.make %><br /><br />
+		<strong>Model:</strong> <%= @title_loan.vin_model %><br /><br />
+		<strong>Style:</strong> <%= @title_loan.style %><br /><br />
+		<strong>Color:</strong> <%= @title_loan.color %><br /><br />
+		<strong>Year:</strong> <%= @title_loan.year %><br /><br />
+	</td>
+	<td>
+		<strong>Loan Balance:</strong> <%= number_to_currency(@title_loan.loan_amount) %><br /><br />
+		<strong>Payments Made:</strong> <%= @title_loan.payments_made %><br /><br />
+		<strong>Initial Total Loan:</strong> <%= number_to_currency(@title_loan.base_amount) %><br /><br />
+		<strong>15% Payments: </strong> <%= number_to_currency(@title_loan.estimate_payments(0)) %><br /><br />
+		<strong>10% Payments: </strong> <%= number_to_currency(@title_loan.estimate_payments(4)) %><br /><br />
+		<strong>Est. Late Fee at 15%:</strong> <%= number_to_currency(@title_loan.estimate_late_payment_fee(0.15))%> / per day<br /><br />
+		<strong>Est. Late Fee at 10%:</strong> <%= number_to_currency(@title_loan.estimate_late_payment_fee(0.10))%> / per day<br /><br />
+	</td>
+</tr>
+</table>
+
 
 <p>
 	TEST:<br />
-	<%= @title_loan.estimate_payments(1) %>
+	<%= @title_loan.estimate_payments(9) %>
 </p>
 
 <div id="photos">

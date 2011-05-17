@@ -1,3 +1,27 @@
-<% title "Homes" %>
+<% title "Home" %>
 
-I am Home...
+<% if !user_signed_in? %>
+	<%= form_for("user", :url => user_session_path) do |f| %>
+	<p><%= f.label :username %><br />
+	  <%= f.text_field :username %></p>
+
+	<p><%= f.label :password %><br />
+	  <%= f.password_field :password %></p>
+
+	  <%= f.submit 'Sign in', :class => "smallbtn green" %>
+	<% end %>
+<% else %>
+ <% if current_user.is?(:admin) %>
+	<% Company.all.each do |company| %>
+		<%= link_to company.name, company_dashboard_path(company)%><br />
+	<% end %>
+  <% else %>
+	<% if !current_user.companies.blank? %>
+	  <% for company in current_user.companies %>
+	    <%= link_to company.name, company_dashboard_path(company)%><br />
+	  <% end %>
+	<% else %>
+	  You have not been assigned to a company!
+	<% end %>
+  <% end %>
+<% end %>

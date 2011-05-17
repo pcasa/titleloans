@@ -16,8 +16,14 @@ class User < ActiveRecord::Base
   
   accepts_nested_attributes_for :employmentships, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
   
+  before_save :update_full_address
   
   ROLES = %w[admin employee investor banned]
+  
+  
+  def full_name
+    firstname + " " + lastname
+  end
   
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
@@ -35,6 +41,16 @@ class User < ActiveRecord::Base
   
   def is?(role)
     roles.include?(role.to_s)
+  end
+  
+  def update_full_address
+    unless self.street2.blank?
+      street = self.street1 + "<br />" + self.street2 + "<br />" 
+    else 
+      street = self.street1 + "<br />"
+    end
+    citystatezip = self.city + ", " + self.state + " " + self.zipcode
+    self.full_address = street + citystatezip
   end
 
 protected

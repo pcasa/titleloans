@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-    attr_accessible :company_id, :customer_id, :title_loan_id, :loan_payment, :amount_paid, :created_at
+    attr_accessible :company_id, :customer_id, :title_loan_id, :loan_payment, :amount_paid, :created_at, :user_id
     
     belongs_to :company, :class_name => "Company", :foreign_key => "company_id"
     belongs_to :customer, :class_name => "Customer", :foreign_key => "customer_id"
@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
   
   before_create :set_loan_payment, :update_title 
   before_destroy :put_back_to_titles
+  after_create :run_schedule
   
   validates_presence_of :amount_paid, :message => "can't be blank"
   validate :min_amount_paid, :on => :create
@@ -23,6 +24,10 @@ class Order < ActiveRecord::Base
     if !amount_paid.blank? && !title_loan_id.blank? && amount_paid < title_loan.payment_should_be
       errors[:base] << "Minimal Amount Not Paid."
     end
+  end
+  
+  def run_schedule
+    title_loan.schedule_loan_tasks(self)
   end
   
 private

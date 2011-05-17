@@ -13,7 +13,7 @@ gem 'rails3_acts_as_paranoid'
 gem 'carrierwave'
 gem 'rmagick'
 gem 'mini_magick'
-
+gem 'formtastic'
 
 gem 'populator'
 gem 'faker'

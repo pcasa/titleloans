@@ -8,11 +8,18 @@
 <%= form_for [current_company, @title_loan], :multipart => true,  do |f| %>
   <%= f.error_messages %>
 	<%= f.hidden_field :parent_id %>
+  <% if @title_loan.new_record? %>
+	<%= f.hidden_field :user_id %>
+	<%= f.hidden_field :company_id %>
+  <% else %>
+	<strong>Assigned Employee:</strong> <%= f.collection_select :user_id, User.all(:order => 'lastname, firstname'), :id, :full_name %> | 
+	<strong>Assigned Location:</strong> <%= f.collection_select :user_id, Company.all(:order => 'name'), :id, :name %><br />
+  <% end %>
   <p>
-  	<%= f.label :customer_id %><br />
+  	<%= f.label :customer_id %>: 
 	<%= f.collection_select :customer_id, Customer.all(:order => 'lastname, firstname'), :id, :full_name, :prompt => "Select Someone" %>
   </p>
-<% if @title_loan.parent_id.blank? %>
+<% unless @title_loan.new_record? && !@title_loan.parent.blank? %>
   <p>
     <%= f.label :vin %><br />
     <%= f.text_field :vin %>
@@ -57,7 +64,7 @@
     <%= f.text_field :payments_made %>
   </p>
   <p>
-    <%= f.label :base_amount %><br />
+    Base Amount<br /><span class="smallertxt">What system uses for multiplying payments.<br />This is set automatically. </span><br />
     <%= f.text_field :base_amount %>
   </p>
 <% unless @title_loan.new_record? %>

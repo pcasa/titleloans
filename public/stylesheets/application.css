@@ -110,6 +110,11 @@ background: linear-gradient(#2e7938, #39b652);
 	float: right;
 }
 
+.field_with_errors {
+	color: red;
+	background-color: #FCC;
+	font-weight: bold;
+}
 
 /*** Header Container ***/
 #header_container {
@@ -152,11 +157,11 @@ background: linear-gradient(#2e7938, #39b652);
 
 #menu {
 	display: inline-block;
-	width: 100%;
 	list-style-type: none;
 	margin: 5px 0 10px;
 	padding: 0;
 	z-index: 1001;
+	width: 100%;
 }
 
 #menu li {
@@ -214,10 +219,11 @@ background: linear-gradient(#2e7938, #39b652);
 #menu li ul li {
 	margin-top: 5px;
 	float: none;
+	margin-right: 10px;
 }
 
 #menu li ul li a {
-	display: block;
+	display: inline-block;
 	width: 92%;
 }
 

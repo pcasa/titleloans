@@ -1,18 +1,20 @@
 class Task < ActiveRecord::Base
   acts_as_paranoid
   
-    attr_accessible :user_id, :assigned_to, :completed_by, :name, :asset_id, :asset_type, :category, :due_at, :deleted_at
+    attr_accessible :user_id, :assigned_to, :completed_by, :name, :asset_id, :asset_type, :category, :due_at, :deleted_at, :company_id, :force_task
   
   belongs_to  :asset, :polymorphic => true
   belongs_to :insurance_policy
   belongs_to :order
-  belongs_to :company, :class_name => "Company", :foreign_key => :assigned_company
+  belongs_to :company
   belongs_to :user
   belongs_to  :assignee, :class_name => "User", :foreign_key => :assigned_to
   belongs_to  :completor, :class_name => "User", :foreign_key => :completed_by
   has_one :comment, :as => :commentable, :dependent => :destroy
   
   validates_presence_of :due_at, :on => :create, :message => "can't be blank"
+  
+  attr_accessor :reschedule_date, :force_task
   
   before_update :if_user_assigned_delete_task, :check_if_notes, :unless => proc { |a| a.force_task }
   

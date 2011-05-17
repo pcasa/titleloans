@@ -3,6 +3,7 @@
 <%= form_for [current_company, @order] do |f| %>
   <%= f.error_messages %>
     <%= f.hidden_field :company_id %>
+	<%= f.hidden_field :user_id %>
   <p>
     Customer Info<br />
     <%= f.collection_select :customer_id, Customer.all(:order => 'lastname, firstname'), :id, :full_name %>

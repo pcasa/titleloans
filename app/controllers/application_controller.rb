@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
           destroy_user_session_path
        else
         if resource_or_scope.companies.size == 1
-          show_company_path(resource_or_scope.companies.first)
+          company_dashboard_path(resource_or_scope.companies.first)
         else
           root_url
         end

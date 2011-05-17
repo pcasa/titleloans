@@ -31,7 +31,12 @@ class Ability
   
   
   def employee
-    can :read, User
+    can :dashboard, Company
+    can [:read, :update], User do |current_user|
+      user.id == current_user.id
+    end
+    can [:read, :create], [TitleLoan, Photo, Comment, Address, Order, Task, Customer]
+    can :update, [Customer, Task]
   end
 
   def admin

@@ -1,4 +1,8 @@
 class CompaniesController < ApplicationController
+  
+  before_filter :authenticate_user!
+  load_and_authorize_resource 
+  
   def index
     @companies = Company.all
   end
@@ -45,4 +49,9 @@ class CompaniesController < ApplicationController
     flash[:notice] = "Successfully destroyed company."
     redirect_to companies_url
   end
+  
+  def dashboard
+    @tasks = Task.where("company_id = ? OR assigned_to = ?", current_company, current_user)
+  end
+  
 end

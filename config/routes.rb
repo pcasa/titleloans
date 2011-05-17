@@ -1,7 +1,7 @@
 Titleloans::Application.routes.draw do
   
   
-  resources :tasks
+  
 
   resources :companies
   
@@ -11,7 +11,9 @@ Titleloans::Application.routes.draw do
   match '/companies/:id/edit' => 'companies#edit', :as => :edit_company
   match '/companies/new' => 'companies#new', :as => :new_company
   match '/companies/:id/destroy' => 'companies#destroy', :as => :delete_company  
+  match '/:company_id/dashboard' => 'companies#dashboard', :as => :company_dashboard
   scope '/:company_id', :as => :company do 
+    resources :tasks
     resources :orders
     resources :title_loans do
       resources :photos, :only => [:create, :destroy]

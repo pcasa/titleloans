@@ -8,6 +8,8 @@
 			<%= link_to "Delete", [current_company, title, photo], :method => :delete, :confirm => "Are you sure?", :remote => :true %>
 		<% end %>
 	  <% end %>
+	<% else %>
+		<br /><%= link_to "Add Pictures",[current_company, title] if title.child.blank? && !title.closed? %>
 	<% end %>
 	</div>
 <% end %>
