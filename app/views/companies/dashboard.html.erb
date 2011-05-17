@@ -11,6 +11,9 @@
 </div>
 
 <ul id="dashboard">
+	<li><%= link_to image_tag("/images/icons/32/scheduled_task.png", :size => "32x32", :class => "dashIcon") + "Tasks" + "<br />
+	<div class='subText'>See details of pending tasks.</div>".html_safe, company_tasks_path %></li>
+<li>
 	<li><%= link_to image_tag("/images/icons/32/vcard.png", :size => "32x32", :class => "dashIcon") + "Customers" + "<br />
 	<div class='subText'>See customers and all there details.</div>".html_safe, company_customers_path(current_company) %></li>
 	<li><%= link_to image_tag("/images/icons/32/curriculum_vitae.png", :size => "32x32", :class => "dashIcon") + "Title Loans" + "<br /><div class='subText'>See All Title Loans.</div>".html_safe, company_title_loans_path %></li>

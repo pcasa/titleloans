@@ -1,6 +1,10 @@
 <% unless current_company.blank? %>
 <ul id="menu">
-  <li><%= link_to image_tag("/images/icons/32/control_panel.png", :size => "32x32", :class => "menu32Icon") + " Dashboard", company_dashboard_path %></li>
+  <li><%= link_to image_tag("/images/icons/32/control_panel.png", :size => "32x32", :class => "menu32Icon") + " Dashboard", company_dashboard_path %>
+	<ul>
+		<li><%= link_to image_tag("/images/icons/32/scheduled_task.png", :size => "32x32", :class => "menu32Icon") + "Tasks", company_tasks_path %></li>
+	</ul>
+  </li>
   <li><%= link_to image_tag("/images/icons/32/vcard.png", :size => "32x32", :class => "menu32Icon") + " Customers", company_customers_path %></li>
   <li><%= link_to image_tag("/images/icons/32/curriculum_vitae.png", :size => "32x32", :class => "menu32Icon") + " Title Loans", company_title_loans_path %></li>
   <li><%= link_to image_tag("/images/icons/32/money_bag.png", :size => "32x32", :class => "menu32Icon") + " Orders", company_orders_path %></li>
