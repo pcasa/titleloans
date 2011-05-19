@@ -13,7 +13,11 @@
 	<%= f.hidden_field :company_id %>
   <% else %>
 	<strong>Assigned Employee:</strong> <%= f.collection_select :user_id, User.all(:order => 'lastname, firstname'), :id, :full_name %> | 
-	<strong>Assigned Location:</strong> <%= f.collection_select :user_id, Company.all(:order => 'name'), :id, :name %><br />
+	<strong>Assigned Location:</strong> <%= f.collection_select :user_id, Company.all(:order => 'name'), :id, :name %><br /><br />
+	
+  <% end %>
+  <% if @title_loan.new_record? || current_user.is?(:admin) %>
+	<strong>Start Date:</strong> <%= f.text_field :formated_created_at, :class => 'created-at-datetime', :value => Time.now.strftime('%b %d %Y %H:%M') %><br />
   <% end %>
   <p>
   	<%= f.label :customer_id %>: 
@@ -43,6 +47,10 @@
   <p>
     <%= f.label :color %><br />
     <%= f.text_field :color %>
+  </p>
+	<p>
+    <%= f.label :milage %><br />
+    <%= f.text_field :milage %>
   </p>
   <p>
     Year:<br />

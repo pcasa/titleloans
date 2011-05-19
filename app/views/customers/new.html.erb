@@ -196,10 +196,22 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="3">
+		<td>
+			<p>
+				Started at:<br />
+				<%= builder.text_field :formated_created_at, :class => 'created-at-datetime', :value => Time.now.strftime('%b %d %Y %H:%M') %>
+			</p>
+		</td>
+		<td>
 			<p>
 			    Tag #<br />
 			    <%= builder.text_field :tag_number %>
+			  </p>	
+		</td>
+		<td>
+			<p>
+			    Milage #<br />
+			    <%= builder.text_field :milage %>
 			  </p>	
 		</td>
 	</tr>

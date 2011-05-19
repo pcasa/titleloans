@@ -56,6 +56,7 @@ $(document).ready(function(){
 	$('.date-picker').datepicker({ dateFormat: 'M d yy' });
 	
 	$('input.ui-datetime-picker, .task-datetime, .datetime-picker').datetimepicker({ dateFormat: 'M d yy', ampm: true });
+	$('.created-at-datetime').datetimepicker({dateFormat: 'M dd, yy ', ampm: true});
 	$('.task-picker').removeClass('hasDatepicker').datetimepicker({ onSelect: function() { $(".ui-datepicker a").removeAttr("href"); }, dateFormat: 'M dd, yy ', ampm: true });
 	
 	// to use datetimepicker put it on page.

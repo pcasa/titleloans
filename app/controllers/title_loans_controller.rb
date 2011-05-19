@@ -46,4 +46,8 @@ class TitleLoansController < ApplicationController
     flash[:notice] = "Successfully destroyed title loan."
     redirect_to company_title_loans_url
   end
+  
+  def pawn_agreement
+    @title_loan = TitleLoan.find(params[:id])
+  end
 end

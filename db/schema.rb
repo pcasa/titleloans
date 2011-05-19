@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110517131957) do
+ActiveRecord::Schema.define(:version => 20110519171934) do
 
   create_table "addresses", :force => true do |t|
     t.string   "street1",          :limit => 128
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20110517131957) do
     t.string   "tag_number",       :limit => 16
     t.date     "due_date"
     t.integer  "user_id"
+    t.string   "milage",           :limit => 16
   end
 
   add_index "title_loans", ["company_id"], :name => "index_title_loans_on_company_id"

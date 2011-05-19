@@ -11,7 +11,7 @@ class TitleLoan < ActiveRecord::Base
   has_many :comments, :as => :commentable
   
   
-    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date, :user_id, :photos_attributes, :photo_attributes
+    attr_accessible :vin, :make, :vin_model, :style, :color, :year, :customer_id, :company_id, :closed_date, :closed_by, :loan_amount, :parent_id, :payments_made, :base_amount, :previous_balance, :tag_number, :due_date, :user_id, :milage, :photos_attributes, :photo_attributes, :formated_created_at
     
     validates_presence_of :customer_id, :vin, :message => "can't be blank", :if => Proc.new { |loan| loan.parent_id.blank? }
     validates_presence_of :loan_amount, :on => :create, :message => "can't be blank"
@@ -23,7 +23,15 @@ class TitleLoan < ActiveRecord::Base
     
     before_create :set_base_amount, :check_if_parent, :set_due_date
     after_create :check_if_parent_had_pictures, :set_initial_reminder
-    
+  
+  
+  def formated_created_at
+    created_at.strftime('%b %d, %Y %I:%M %p')
+  end
+
+  def formated_created_at=(time_str)
+     self.created_at = Time.parse(time_str)
+  end  
        
   def set_base_amount
     if parent_id.blank?
@@ -57,18 +65,27 @@ class TitleLoan < ActiveRecord::Base
     end
   end
   
+  def amount_borrowed
+    if !previous_balance.blank?
+      p = (base_amount - previous_balance)
+    else
+      p = (base_amount - 18)
+    end
+    return p
+  end
+  
   #######################################################################################
   # Initial Due Date set
   #######################################################################################
   
   def set_due_date
-    if Date.today.day >= 29
-      y = Date.today.year
-      m = Date.today.next_month.month
+    if created_at.day >= 29
+      y = created_at.year
+      m = created_at.next_month.month
       d = 28
       x = Date.new(y, m, d)
     else
-      x = Date.today.next_month
+      x = created_at.next_month
     end
     self.due_date = x
   end

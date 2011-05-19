@@ -1,0 +1,235 @@
+<% title "Pawn Agreement" %>
+
+<div id="agreement">
+<div class="center bold">Motor Vehicle Pawn Agreement and Disclosure-Receipt</div>
+<div class="border">
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+	<% 20.times do |i| %>
+	<% i = '<td width="5%">&nbsp;</td>'%>
+		<%= i.html_safe %>
+	<%end %>
+	</tr>
+	<tr>
+		<td colspan="3">Today's Date</td>
+		<td colspan="3" class="border"><%= @title_loan.created_at.strftime('%m/%d/%Y')%></td>
+		<td colspan="2"></td>
+		<td colspan="3">Pawn Number</td>
+		<td colspan="2" class="border"><%= @title_loan.id%></td>
+		<td></td>
+		<td colspan="2">Today's Date</td>
+		<td></td>
+		<td colspan="3" class="border"><%= @title_loan.created_at.strftime('%m/%d/%Y') %></td>
+	</tr>
+	<tr>
+		<td colspan="20">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="3">Pawn Broker:</td>
+		<td colspan="5">Atlanta Title Solutions LLC</td>
+		<td colspan="6"></td>
+		<td colspan="3">Maturity Date</td>
+		<td colspan="3" class="border"><%= @title_loan.due_date.strftime('%m/%d/%Y') %></td>
+	</tr>
+	<tr valign="TOP">
+		<td colspan="3">Address</td>
+		<td colspan="7"><%= current_company.full_address.html_safe %></td>
+		<td colspan="10"></td>
+	</tr>
+	<tr>
+		<td colspan="3">Phone #:</td>
+		<td colspan="7"><%= number_to_phone(current_company.phone)%></td>
+		<td colspan="3"></td>
+		<td colspan="7">Description of Titled Personal Property</td>
+	</tr>
+	<tr>
+		<td colspan="10"></td>
+		<td colspan="10" class="bottom-border">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="20">Client/Pledgor Data</td>
+	</tr>
+	<tr>
+		<td colspan="3">Name</td>
+		<td colspan="5" class="border"><%= @title_loan.customer.full_name %></td>
+		<td colspan="3"></td>
+		<td colspan="2" class="border">VIN#</td>
+		<td colspan="7" class="border"><%= @title_loan.vin %></td>
+	</tr>
+	<tr>
+		<td colspan="3">Phone Number:</td>
+		<td colspan="5" class="border">Pending</td>
+		<td>Height</td>
+		<td colspan="2" class="border"><%= @title_loan.customer.c_height%></td>
+		<td colspan="2" class="border">Year:</td>
+		<td colspan="7" class="border"><%= @title_loan.year %></td>
+	</tr>
+	<tr>
+		<td colspan="3">Address:</td>
+		<td colspan="5" class="border"><%= @title_loan.customer.street1 %></td>
+		<td>Gender</td>
+		<td colspan="2" class="border"><%= @title_loan.customer.gender %></td>
+		<td colspan="2" class="border">Make:</td>
+		<td colspan="7" class="border"><%= @title_loan.make %></td>
+	</tr>
+	<tr>
+		<td colspan="3"></td>
+		<td colspan="5" class="border"><%= @title_loan.customer.street2 %></td>
+		<td>Race</td>
+		<td colspan="2" class="border"><%= @title_loan.customer.race %></td>
+		<td colspan="2" class="border">Model:</td>
+		<td colspan="7" class="border"><%= @title_loan.vin_model %></td>
+	</tr>
+	<tr>
+		<td colspan="3">City / State:</td>
+		<td colspan="5" class="border"><%= @title_loan.customer.city %>, <%= @title_loan.customer.state %></td>
+		<td></td>
+		<td colspan="2"></td>
+		<td colspan="2" class="border">Tag#:</td>
+		<td colspan="7" class="border"><%= @title_loan.tag_number %></td>
+	</tr>
+	<tr>
+		<td colspan="3">Zip Code:</td>
+		<td colspan="5" class="border"><%= @title_loan.customer.zipcode %></td>
+		<td>DOB</td>
+		<td colspan="2" class="border"><%= @title_loan.customer.dob.strftime('%m/%d/%Y') %></td>
+		<td colspan="2" class="border">Miles:</td>
+		<td colspan="7" class="border"><%= @title_loan.milage %></td>
+	</tr>
+</table>
+<br />	
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr valign="TOP">
+		<td width="79%" class="border nopadding">
+		<table width="100%" cellpadding="0" cellspacing="0">
+			<tr>
+				<td colspan="5">Disclosures Made In Compliance With Federal Thruth in Lending<br /><br /></td>
+			</tr>
+			<tr valign="TOP">
+				<td width="20%" class="border"><span class="bold biggertxt">ANNUAL PERCENTAGE RATE</span><br /><span class="smallertxt">The Cost of your credit as a yearly rate.</span><br /><div class="txtright"><%=  number_to_percentage(((@title_loan.get_percentage(1) * 100) * 12), :precision => 0) %><br /><br /></div></td>
+				<td width="20%" class="border"><span class="bold biggertxt">FINANCE CHARGE</span><br /><span class="smallertxt">The dollar amount the credit will cost you.<br /><br /></span><div class="txtright"><%= number_to_currency(@title_loan.estimate_payments(0))%></div></td>
+				<td width="15%"></td>
+				<td width="23%" class="border"><span class="bold biggertxt">Amount Finance</span><br /><span class="smallertxt">The amount of credit provided to you or on your behalf.</span><br /><br /><br /><div class="txtright"><%= number_to_currency(@title_loan.base_amount)%></div></td>
+				<td width="22%" class="border"><span class="bold biggertxt">Total of Payments</span><br /><span class="smallertxt">The amount you will have paid after you have made all payments as schedule<br /></span><br /><div class="txtright"><%= number_to_currency((@title_loan.base_amount + @title_loan.estimate_payments(0)))%></div></td>
+			</tr>
+			<tr valign="TOP">
+				<td colspan="3"><div class="smallLeft smallertxt"><b>Security:</b> You are giving a security interest in the above described motor vehicle<br /><b>Prepayment:</b> If you pay off early, you will not have to pay a penalty and will not be entitled to a refund.<br /><br />
+				See below for any additional information about non payment, default, any required payment in full before the scheduled date and prepayment refunds and penalties</div></td>
+				<td colspan="2"><div class="smallRight">Filling Fees: <div class="txtright bottom-border">$18.00</div><br /><br /><b>Payment Schedule:</b><br />a @ <span class="bottom-border"><%= number_to_currency((@title_loan.base_amount + @title_loan.estimate_payments(0)))%></span><br />Due on: <div class="txtright"><%= @title_loan.due_date.strftime('%m/%d/%Y') %></div> </div></td>
+			</tr>
+		</table>	
+		</td>
+		<td width="2%"></td>
+		<td withd="19%" class="border rightTable">
+			<table width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td colspan="2">Itemization of Amount Finance</td>
+				</tr>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr valign="BOTTOM">
+					<td class="bottom-border"><%= number_to_currency(@title_loan.amount_borrowed)%></td>
+					<td>Amount Given to you directly</td>
+				</tr>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr valign="BOTTOM">
+					<td class="bottom-border"><%= number_to_currency(@title_loan.previous_balance)%></td>
+					<td>Amount paid on your prior account</td>
+				</tr>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="2">Amount paid to others on your behalf</td>
+				</tr>
+				<tr valign="BOTTOM">
+					<td class="bottom-border"><%= "$ 18.00" if @title_loan.previous_balance.blank? || @title_loan.previous_balance == 0 %></td>
+					<td>To Dept. of Motor Vehicles</td>
+				</tr>
+				<tr>
+					<td colspan="2">&nbsp;</td>
+				</tr>
+				<tr valign="BOTTOM">
+					<td class="bottom-border"><%= number_to_currency(@title_loan.base_amount)%></td>
+					<td>Amount Financed (Total)</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+<table width="80%" cellpadding="0" cellspacing="0" border="1">
+	<tr>
+		<td rowspan="2" class="smallertxt" width="18%">Dollar amount needed to redeem pawn in individual periods
+		provided all fees and charges have been kept current and we agree to an extension</td>
+		<td width="18%" align="CENTER">Days 1-30</td>
+		<td width="18%" align="CENTER">Days 31-60</td>
+		<td width="18%" align="CENTER">Days 61-90</td>
+		<td width="28%" align="CENTER">Each 30 Day period<br />There After</td>
+	</tr>
+	<tr>
+		<td align="CENTER"><%= number_to_currency((@title_loan.base_amount + @title_loan.estimate_payments(1)))%></td>
+		<td align="CENTER"><%= number_to_currency((@title_loan.base_amount + @title_loan.estimate_payments(2)))%></td>
+		<td align="CENTER"><%= number_to_currency((@title_loan.base_amount + @title_loan.estimate_payments(3)))%></td>
+		<td align="CENTER"><%= number_to_currency((@title_loan.base_amount + @title_loan.estimate_payments(4)))%></td>
+	</tr>
+	<tr>
+		<td class="smallertxt">Annual Percentage Rate for each 30 day period:</td>
+		<td align="CENTER"><%=  number_to_percentage(((@title_loan.get_percentage(1) * 100) * 12), :precision => 0) %></td>
+		<td align="CENTER"><%=  number_to_percentage(((@title_loan.get_percentage(2) * 100) * 12), :precision => 0) %></td>
+		<td align="CENTER"><%=  number_to_percentage(((@title_loan.get_percentage(3) * 100) * 12), :precision => 0) %></td>
+		<td align="CENTER"><%=  number_to_percentage(((@title_loan.get_percentage(4) * 100) * 12), :precision => 0) %></td>
+	</tr>
+	<tr>
+		<td class="smallertxt">Interest and Pawnshop charges included the above redemtion price for each 30 day period:</td>
+		<td align="CENTER"><%= number_to_currency(@title_loan.estimate_payments(1))%></td>
+		<td align="CENTER"><%= number_to_currency(@title_loan.estimate_payments(2))%></td>
+		<td align="CENTER"><%= number_to_currency(@title_loan.estimate_payments(3))%></td>
+		<td align="CENTER"><%= number_to_currency(@title_loan.estimate_payments(4))%></td>
+	</tr>
+	
+</table>
+</div>
+<br />
+<div class="finePrint">
+	1. This is a pawn transaction. Pawnbroker is purchasing Pledgor's certificate of title in the above described motor vehicle on the condition that it may be redeemed for a fixed price within a stated period of time.<br />
+	2. Amount you must pay to redeem this transaction on or before the maturity date is: <div class="infoAmount"><%= number_to_currency((@title_loan.base_amount + @title_loan.estimate_payments(1)))%></div> During the grace period following this transaction or following the 1st or 2nd extension, you may redeem this transaction for: <div class="infoAmount"></div> if all other charges and fees are current. During the grace period following any extension after the 2nd, you may redeem this transaction for <div class="infoAmount"></div> if all other charges and fees are current.<br />
+	3. Failure to make your payments as described in this document can result in the loss of the pawned item.	The pawnbroker can sell or keep the item if you have not made all payments by the specified maturity date. THE LENGTH OF THE PAWN TRANSACTION IS 30 DAYS AND IT CAN ONLY BE RENEWED WITH THE AGREEMENT OF BOTH PARTIES AND ONLY FOR 30 DAY INCREMENTAL PERIODS.<br />
+	4. Pawnbroker shall retain physical possession of the certificate of title but Pledgor may use the motor vehicle so long as Pledgor complies with this agreement and all requirements imposed by law. Failure to make the payments described herein on or before the specified maturity date shall be deemed a default under this agreement and all requirements imposed by law. In the event of such default, Pledgor shall immediately deliver the motor vehicle to pawn broker with out demand or notice. If Pledgor fails to deliver the motor vehicle, Pawnbroker has the right in addition to all other afforded by law, without further notice or demand, to take possession of the motor vehicle, whether the same may be found on public or private property. If Pawnbroker elects to exercise its right of possession upon default, Pledgor agrees not to interfere with Pawnbroker in any manner whatsoever so that Pawnbroker may take possession in a peaceful manner. Pawnbroker may not sell the motor vehicle until the expiration of any applicable grace periods as provided in this agreement.<br />
+	5. Pledgor shall have a grace period of 30 calendar days after maturity date to redeem the certificate of title. During the 30-day grace period, pledgor may redeem the certificate of title by paying Pawnbroker the Redemption Price set forth above the 30-day period prior to redemption, plus an additional interest charge of : <div class="infoAmount"><%= number_to_currency(@title_loan.estimate_payments(1))%></div> (which is the <%= number_to_percentage(((@title_loan.get_percentage(1) * 100) * 12), :precision => 0) %> for the Amount Financed), plus any additional registration, repossession, storage fees and shipping costs permitted by law.  Upon the expiration of the 30 day grace period after the maturity date, Pledgor will have no right to redeem. At that time, the motor vehicle becomes property of Pawnbroker and may be sold or disposed of in its sole discretion.<br />
+</div>
+<br /><br />
+<div class="txtright biggertxt">Pledgor's Initials:<div class="infoAmount"></div></div>
+<center>Page 1 of 2</center>
+<DIV style="page-break-after:always"></DIV>
+<div class="finePrint">
+6. In the event of repossession of motor vehicle by Pawnbroker pursuant to a default, Pledgor may be charged as follows: A storage fee not to exceed $5 dollars per day per vehicle that pawnbroker actually must store A repossession fee of $50.00. Note: A Repossession fee of more than$50.00 may be charge if the actual repossession of the vehicle takes place more than 50 miles from the office where the pawn originated..<br />
+Any costs to ship the pledge items to Pledgor plus a handling fee of no more than $50 Percent of the actual shipping costs.<br />
+7. Pledgor, by execution of this agreement, hereby verifies that he is at least <strong>18 Years of Age</strong>, has read this contract and has received a fully executed copy of it. Pledgor has acknowledges that he has inspected the motor vehicle and that such motor vehicle is in good repair and condition. Pledgor shall bear the entire risk of loss or damage to the motor vehicle while in his possession and does agree to indemnify and hold harmless pawnbroker from any and all property damages or personal injuries arising from the operation of the motor vehicle, including, but not limited to, all lawsuits, Judgements, attorney fees, court costs, or any expenses that may be incurred.<br />
+<strong>8. Notice Pursuant to O.C.G.A Section 44-12-138(b):<br />This is a pawn transaction. Failure to make your payments as described in this document can result in the loss of your motor vehicle. Pawnbroker can sell or keep transaction. Failure to make your payments as described in this document can result in the loss of your Motor Vehicle. Pawnbroker can sell or keep the item if you have not made all payments by the specified maturity date. Pawnbroker can also charge you certain fees if he or she actually repossesses the motor vehicle.</strong><br />
+8. By entering into this agreement, pledgor represents and warrants that pledgor is the owner of the pledged motor vehicle, free and clear of any liens, claims or encumbrances. Pledgor further promises that so long as any amount due hereunder remains unpaid to Pawnbroker that pledgor will not attempt to transfer any interest in the motor vehicle to any third party. If these or any other representations Pledgor has made to Pawnbroker prove to be false or fraudulent , then the maturity date will be automatically accelerated and Pawnbroker will have the immediate right to take possession of the motor vehicle as provided in the paragraph above.<br />
+10. The unenforceability or invalidity of any portion of this contract shall not render unenforceable or invalid the remaining portions of same. Time is of the essence of this agreement<br/>
+11. This contract constitutes the entire agreement between the parties. No agreements, representations, or warranties other than those specifically stated therein shall be binding on the parties unless reduced to writing and signed by both parties.<br />
+<br />
+VERBAL AGREEMENTS FOR ADDITIONAL DAYS ARE NOT BINDING .<br />
+NO GOODS SHOWN FOR REDEMPTION UNLESS PAID IN ADVANCE. <br />
+NO GOODS SENT C.O.D NO PERSONAL CHECKS ACCEPTED. <br />
+PAWNED FOR 30 DAYS ONLY.<br />
+<br />
+<br />
+<br />
+<br />
+<table width="100%">
+	<tr>
+		<td width="25%" class="top-border">PLEDGOR</td>
+		<td width="12%"></td>
+		<td width="25%" class="top-border">CO-PLEDGOR</td>
+		<td width="13%"></td>
+		<td width="25%" class="top-border">PAWNBROKER</td>
+	</tr>
+</table>
+</div>
+</div>

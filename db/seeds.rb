@@ -73,7 +73,8 @@ User.create!(
 :state => state,
 :zipcode => zip,
 :full_address => street1 + "<br />" + city + ", " + state + " " + zip,
-:roles => ['admin']
+:roles => ['admin'],
+:employmentships_attributes => [{:company_id => Company.first.id}]
 )
 
 

@@ -15,6 +15,7 @@ Titleloans::Application.routes.draw do
   scope '/:company_id', :as => :company do 
     resources :tasks
     resources :orders
+    match '/title_loans/:id/pawn_agreement' => 'title_loans#pawn_agreement', :as => :pawn_agreement
     resources :title_loans do
       resources :photos, :only => [:create, :destroy]
     end

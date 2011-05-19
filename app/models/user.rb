@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   validates_presence_of :roles, :username, :message => "can't be blank"
   
   accepts_nested_attributes_for :employmentships, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
+  accepts_nested_attributes_for :companies, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
+  
   
   before_save :update_full_address
   

@@ -15,6 +15,7 @@
 </tr>
 <tr valign="TOP">
 	<td>
+		<strong>Created on:</strong> <%= @title_loan.created_at.strftime('%b %d, %Y') %><br /><br />
 		<strong>Due Date:</strong> <%= @title_loan.due_date.strftime('%b %d, %Y') %><br /><br />
 		<strong>Customer:</strong>
 		  <%= link_to @title_loan.customer.full_name, [current_company, @title_loan.customer] unless @title_loan.customer_id.blank?  %><br /><br />
@@ -29,6 +30,7 @@
 		<strong>Style:</strong> <%= @title_loan.style %><br /><br />
 		<strong>Color:</strong> <%= @title_loan.color %><br /><br />
 		<strong>Year:</strong> <%= @title_loan.year %><br /><br />
+		<strong>Milage:</strong> <%= @title_loan.milage %><br /><br />
 	</td>
 	<td>
 		<strong>Loan Balance:</strong> <%= number_to_currency(@title_loan.loan_amount) %><br /><br />
@@ -67,7 +69,8 @@
   <%= link_to "Destroy", [current_company, @title_loan], :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", company_title_loans_path %> | 
   <%= link_to "Invoice", new_company_order_path(current_company, :title_loan_id => @title_loan.id, :customer_id => @title_loan.customer_id) %> | 
-  <%= link_to "Give Money", new_company_title_loan_path(current_company, :parent_id => @title_loan.id, :customer_id => @title_loan.customer_id)%>
+  <%= link_to "Give Money", new_company_title_loan_path(current_company, :parent_id => @title_loan.id, :customer_id => @title_loan.customer_id)%>| 
+  <%= link_to "Agreement", company_pawn_agreement_path(current_company, @title_loan)%>
 </p>
 
 
