@@ -129,14 +129,14 @@
 					<td colspan="2">&nbsp;</td>
 				</tr>
 				<tr valign="BOTTOM">
-					<td class="bottom-border"><%= number_to_currency(@title_loan.amount_borrowed)%></td>
+					<td class="bottom-border center" width="50%"><%= number_to_currency(@title_loan.amount_borrowed)%></td>
 					<td>Amount Given to you directly</td>
 				</tr>
 				<tr>
 					<td colspan="2">&nbsp;</td>
 				</tr>
 				<tr valign="BOTTOM">
-					<td class="bottom-border"><%= number_to_currency(@title_loan.previous_balance)%></td>
+					<td class="bottom-border center"><%= number_to_currency(@title_loan.previous_balance)%></td>
 					<td>Amount paid on your prior account</td>
 				</tr>
 				<tr>
@@ -146,14 +146,14 @@
 					<td colspan="2">Amount paid to others on your behalf</td>
 				</tr>
 				<tr valign="BOTTOM">
-					<td class="bottom-border"><%= "$ 18.00" if @title_loan.previous_balance.blank? || @title_loan.previous_balance == 0 %></td>
+					<td class="bottom-border center"><%= "$ 18.00" if @title_loan.previous_balance.blank? || @title_loan.previous_balance == 0 %></td>
 					<td>To Dept. of Motor Vehicles</td>
 				</tr>
 				<tr>
 					<td colspan="2">&nbsp;</td>
 				</tr>
 				<tr valign="BOTTOM">
-					<td class="bottom-border"><%= number_to_currency(@title_loan.base_amount)%></td>
+					<td class="bottom-border center"><%= number_to_currency(@title_loan.base_amount)%></td>
 					<td>Amount Financed (Total)</td>
 				</tr>
 			</table>
