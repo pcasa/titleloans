@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   
   has_many :employmentships, :dependent => :destroy
   has_many :companies, :through => :employmentships, :dependent => :destroy
+  has_many :customers
   
   validates_presence_of :roles, :username, :message => "can't be blank"
   

@@ -14,7 +14,7 @@
 </p>
 
 <p>
-  <%= link_to "Edit", edit_comment_path(@comment) %> |
-  <%= link_to "Destroy", @comment, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", comments_path %>
+  <%= link_to "Edit", edit_company_comment_path(current_company, @comment) %> |
+  <%= link_to "Destroy", [current_company, @comment], :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", company_comments_path %>
 </p>

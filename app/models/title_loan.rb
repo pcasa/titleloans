@@ -7,6 +7,7 @@ class TitleLoan < ActiveRecord::Base
   
   has_many :orders
   has_many :photos, :dependent => :destroy
+  has_many :title_docs, :dependent => :destroy
   has_many :tasks, :as => :asset, :dependent => :destroy
   has_many :comments, :as => :commentable
   

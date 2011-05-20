@@ -15,6 +15,8 @@ class CustomersController < ApplicationController
     @customer = Customer.new
     @customer.title_loans.build
     @customer.company_id = current_company.id
+    @customer.user_id = current_user.id
+    phone = @customer.phones.build
   end
 
   def create

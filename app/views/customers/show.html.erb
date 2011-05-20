@@ -5,24 +5,41 @@
 	<ul>
 		<li><a href="#info">Customer Info</a></li>
 		<li><a href="#titles">Title Loans</a></li>
+		<li><a href="#notes">Notes</a></li>
 	</ul>
 	<div id="info">
-		<p>
-		  <strong>Firstname:</strong>
-		  <%= @customer.firstname %>
-		</p>
-		<p>
-		  <strong>Lastname:</strong>
-		  <%= @customer.lastname %>
-		</p>
-		<p>
-		  <strong>Email:</strong>
-		  <%= @customer.email %>
-		</p>
-		<p>
-		  <strong>Current Address:</strong><br />
-		  <%= @customer.full_address.html_safe %>
-		</p>
+		<table width="100%" cellspacing="0" cellpadding="0">
+			<tr valign="TOP">
+				<td width="60%">
+					<p>
+					  <strong>Firstname:</strong>
+					  <%= @customer.firstname %>
+					</p>
+					<p>
+					  <strong>Lastname:</strong>
+					  <%= @customer.lastname %>
+					</p>
+					<p>
+					  <strong>Email:</strong>
+					  <%= @customer.email %>
+					</p>
+					<p>
+					  <strong>Current Address:</strong><br />
+					  <%= @customer.full_address.html_safe %>
+					</p>
+				</td>
+				<td width="40%">
+					<p><% if !@customer.phones.blank? %>
+					  <% for phone in @customer.phones %>
+					    <b><%= phone.phone_type.capitalize %>:</b> <%= number_to_phone(phone.phone_number) %><br />
+					  <% end %>
+					<% else %>
+					  No Number on File.
+					<% end %>
+					</p>
+				</td>
+			</tr>
+		</table>
 		
 		<% unless @customer.addresses.blank? %>
 		<br /><hr /	>
@@ -61,6 +78,16 @@
 		<p>
 			<%= link_to "Create Title", new_company_title_loan_path(:customer_id => @customer.id) %>
 		</p>
+	</div>
+	<div id="notes">
+		<% if !@customer.comments.blank? %>
+		  <% for comment in @customer.comments %>
+		    <%= comment.content %> <%= link_to "Delete", [current_company, comment], :confirm => 'Are you sure?', :method => :delete %> <br />
+		  <% end %>
+		<% else %>
+		  No Notes!
+		<% end %>
+		
 	</div>
 </div>	
 </div>

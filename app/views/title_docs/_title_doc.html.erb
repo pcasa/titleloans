@@ -1,0 +1,6 @@
+<%= div_for(title_doc, :class => "title_doc") do %>
+	<%= link_to File.basename(title_doc.name.url), title_doc.name_url, :class => "document", :target => "_blank"  %>
+	<% if can? :destroy, title_doc %>
+	 - <%= link_to "Delete", [current_company, @title_loan, title_doc], :method => :delete, :confirm => "Are you sure?", :remote => :true %>
+	<% end %>
+<% end %>

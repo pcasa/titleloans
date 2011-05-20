@@ -1,6 +1,6 @@
 <%= content_for :head do %>
-	<%= javascript_include_tag 'jquery.mousewheel', 'jquery.fancybox', 'jquery.uploadify', 'swfobject' %>
-	<%= stylesheet_link_tag "jquery-ui", "uploadify" %>
+<%= javascript_include_tag 'jquery.mousewheel', 'jquery.fancybox', 'jquery.uploadify', 'jquery.form', 'jquery.remotipart', 'swfobject' %>
+<%= stylesheet_link_tag "uploadify" %>
 <% end %>
 <% session_key_name = Rails.application.config.session_options[:key] %>
 
@@ -18,7 +18,7 @@
 		<strong>Created on:</strong> <%= @title_loan.created_at.strftime('%b %d, %Y') %><br /><br />
 		<strong>Due Date:</strong> <%= @title_loan.due_date.strftime('%b %d, %Y') %><br /><br />
 		<strong>Customer:</strong>
-		  <%= link_to @title_loan.customer.full_name, [current_company, @title_loan.customer] unless @title_loan.customer_id.blank?  %><br /><br />
+		  <%= link_to @title_loan.customer.full_name, [current_company, @title_loan.customer] unless @title_loan.customer_id.blank? || !Customer.exists?(@title_loan.customer_id)  %><br /><br />
 		<strong>Current Percentage</strong> <%= number_to_percentage((@title_loan.get_percentage(@title_loan.payments_made) * 100), :precision => 0)%>
 		
 	</td>
@@ -44,12 +44,6 @@
 </tr>
 </table>
 
-
-<p>
-	TEST:<br />
-	<%= @title_loan.estimate_payments(9) %>
-</p>
-
 <div id="photos">
 <% if !@title_loan.photos.blank? %>
   <% for photo in @title_loan.photos %>
@@ -64,13 +58,33 @@
 <%= f.file_field :image, :rel => company_title_loan_photos_path(current_company, @title_loan)%>
 <% end %>
 </div>
+<div id="title_docs" class="">
+<% if !@title_loan.title_docs.blank? %>
+  <% for doc in @title_loan.title_docs %>
+   <%= render :partial => "title_docs/title_doc", :locals => { :title_doc => doc }%>
+  <% end %>
+<% else %>
+  No Docs!
+<% end %>	
+</div>
+<div>
+	<%= form_for [current_company, @title_loan, TitleDoc.new], :html => { :multipart => true }, :remote => true do |f| %>
+	    <div class="doc_field">
+	      <%= f.file_field :name, :class => "file" %>
+		  <div class="fakefile">
+				<input />
+				<img src="/images/upload.png" />
+			</div>
+	    </div>
+	  <% end %>	
+</div>
 <p>
   <%= link_to "Edit", edit_company_title_loan_path(current_company, @title_loan) %> |
   <%= link_to "Destroy", [current_company, @title_loan], :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", company_title_loans_path %> | 
   <%= link_to "Invoice", new_company_order_path(current_company, :title_loan_id => @title_loan.id, :customer_id => @title_loan.customer_id) %> | 
   <%= link_to "Give Money", new_company_title_loan_path(current_company, :parent_id => @title_loan.id, :customer_id => @title_loan.customer_id)%>| 
-  <%= link_to "Agreement", company_pawn_agreement_path(current_company, @title_loan)%>
+  <%= link_to "Agreement", company_pawn_agreement_path(current_company, @title_loan, :format => 'pdf'), :target => "_blank"%>
 </p>
 
 

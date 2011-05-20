@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110519171934) do
+ActiveRecord::Schema.define(:version => 20110520201106) do
 
   create_table "addresses", :force => true do |t|
     t.string   "street1",          :limit => 128
@@ -69,9 +69,11 @@ ActiveRecord::Schema.define(:version => 20110519171934) do
     t.string    "gender",          :limit => 16
     t.string    "race",            :limit => 64
     t.date      "dob"
+    t.integer   "user_id"
   end
 
   add_index "customers", ["company_id"], :name => "index_customers_on_company_id"
+  add_index "customers", ["user_id"], :name => "index_customers_on_user_id"
 
   create_table "employmentships", :force => true do |t|
     t.integer   "user_id"
@@ -92,6 +94,17 @@ ActiveRecord::Schema.define(:version => 20110519171934) do
   end
 
   add_index "orders", ["company_id"], :name => "index_orders_on_company_id"
+
+  create_table "phones", :force => true do |t|
+    t.string   "phone_number"
+    t.string   "phone_type"
+    t.integer  "customer_id"
+    t.boolean  "disabled",     :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phones", ["customer_id", "phone_type", "disabled"], :name => "add_index_phones_ci_pt_d"
 
   create_table "photos", :force => true do |t|
     t.integer  "title_loan_id"
@@ -130,6 +143,14 @@ ActiveRecord::Schema.define(:version => 20110519171934) do
   add_index "tasks", ["asset_id", "asset_type"], :name => "index_tasks_on_asset_id_and_asset_type"
   add_index "tasks", ["company_id", "assigned_to"], :name => "index_tasks_on_company_id_and_assigned_to"
   add_index "tasks", ["deleted_at"], :name => "index_tasks_on_deleted_at"
+
+  create_table "title_docs", :force => true do |t|
+    t.integer  "title_loan_id"
+    t.string   "name"
+    t.string   "f_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "title_loans", :force => true do |t|
     t.integer  "customer_id"

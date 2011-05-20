@@ -35,8 +35,9 @@ class Ability
     can [:read, :update], User do |current_user|
       user.id == current_user.id
     end
-    can [:read, :create], [TitleLoan, Photo, Comment, Address, Order, Task, Customer]
-    can :update, [Customer, Task]
+    can [:read, :create], [TitleLoan, Photo, Comment, Address, Order, Task, Customer, TitleDoc, Phone]
+    can :update, [Customer, Task, Phone]
+    can :destroy, Phone
   end
 
   def admin

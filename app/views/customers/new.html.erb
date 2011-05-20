@@ -1,6 +1,6 @@
 <% title "New Customer" %>
 
-<%= form_for [current_company, @customer] do |f| %>
+<%= nested_form_for [current_company, @customer] do |f| %>
   <%= f.error_messages %>
   <p>
   	<% if current_user.is? :admin %>
@@ -11,7 +11,7 @@
   </p>
 
 <table>
-	<tr>
+	<tr valign="TOP">
 		<td>
 			<p>
 			    <%= f.label :firstname %><br />
@@ -23,6 +23,24 @@
 			    <%= f.label :lastname %><br />
 			    <%= f.text_field :lastname %>
 			 </p>	
+		</td>
+		<td rowspan="3">
+			<p>
+				<%= f.fields_for :phones do |phone_form| %>
+				<table>
+				<tr>
+					<th>Phone Number:</th>
+					<th>Type</th>
+				</tr>
+				<tr>
+					<td><%= phone_form.text_field :phone_number, :size => 17 %><br /><%= phone_form.link_to_remove "Remove this Number" %></td>
+					<td><%= phone_form.collection_select :phone_type, Phone::PHONETYPE, :to_s, :humanize %>
+					</td>
+				</tr>
+				</table>
+				<% end %>
+				 <p><%= f.link_to_add "Add a number", :phones %></p>
+			</p>
 		</td>
 	</tr>
 	<tr>

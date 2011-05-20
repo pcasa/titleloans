@@ -53,6 +53,10 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	$('.doc_field').change(function() { 
+	  $(this).closest("form").submit();
+	});
+	
 	$('.date-picker').datepicker({ dateFormat: 'M d yy' });
 	
 	$('input.ui-datetime-picker, .task-datetime, .datetime-picker').datetimepicker({ dateFormat: 'M d yy', ampm: true });

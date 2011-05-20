@@ -18,6 +18,7 @@ Titleloans::Application.routes.draw do
     match '/title_loans/:id/pawn_agreement' => 'title_loans#pawn_agreement', :as => :pawn_agreement
     resources :title_loans do
       resources :photos, :only => [:create, :destroy]
+      resources :title_docs, :only => [:create, :destroy]
     end
     resources :customers do
       resources :addresses

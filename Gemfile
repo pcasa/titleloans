@@ -14,6 +14,9 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'mini_magick'
 gem 'formtastic'
+gem 'pdfkit', "~> 0.4.6"
+gem 'remotipart'
+gem 'nested_form'
 
 gem 'populator'
 gem 'faker'

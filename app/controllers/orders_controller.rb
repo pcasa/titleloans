@@ -1,4 +1,7 @@
 class OrdersController < ApplicationController
+  load_and_authorize_resource
+  before_filter :authenticate_user!
+  
   def index
     @search = current_company.orders.search(params[:search])
     @orders = @search.relation.paginate(:page => params[:page], :per_page => 25, :order => 'id DESC')

@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource
+  before_filter :authenticate_user!
+  
  #  def index
  #    @comments = Comment.all
  #  end
@@ -35,10 +38,10 @@ class CommentsController < ApplicationController
  #    end
  #  end
  # 
- #  def destroy
- #    @comment = Comment.find(params[:id])
- #    @comment.destroy
- #    flash[:notice] = "Successfully destroyed comment."
- #    redirect_to comments_url
- #  end
+  def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    flash[:notice] = "Successfully destroyed comment."
+    redirect_to [current_company, @comment.commentable]
+  end
 end
