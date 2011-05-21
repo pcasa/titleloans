@@ -52,5 +52,6 @@ class TitleLoansController < ApplicationController
   
   def pawn_agreement
     @title_loan = TitleLoan.find(params[:id])
+    render :layout => false
   end
 end
