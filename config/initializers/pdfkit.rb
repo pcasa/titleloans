@@ -1,7 +1,5 @@
-require 'pdfkit'
-
 PDFKit.configure do |config|
-  config.wkhtmltopdf = `/bin/wkhtmltopdf`
+  config.wkhtmltopdf = '/bin/wkhtmltopdf'
   config.default_options = {
     :encoding=>"UTF-8",
     :page_size=>"A4",
