@@ -16,7 +16,9 @@ tr.odd td { background-color: #ddd; }
 #report-totals .title { font-weight: bold; width: 60%; float: left; }
 #report-totals .amount { width: 40%; float: right; text-align: right; }
 /*** title agreement ****/
-#agreement { font-size: 10px; line-height: 110%; }
+#agreement {
+	font: 9px/130% Arial;
+}
 #agreement tr td { padding: 0 2px; }
 #agreement .smallLeft { float: left; margin-top: 15px; }
 #agreement .smallRight { padding-left: 100px; margin-top: 15px; position: relative; }
