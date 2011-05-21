@@ -1,5 +1,4 @@
 require 'pdfkit'
-middleware.use PDFKit::Middleware
 
 PDFKit.configure do |config|
   config.wkhtmltopdf = `/bin/wkhtmltopdf`
