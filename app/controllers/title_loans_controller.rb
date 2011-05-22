@@ -1,6 +1,6 @@
 class TitleLoansController < ApplicationController
-  # load_and_authorize_resource
-  # before_filter :authenticate_user!
+  load_and_authorize_resource
+  before_filter :authenticate_user!
   
   def index
     @title_loans = TitleLoan.all
@@ -52,6 +52,5 @@ class TitleLoansController < ApplicationController
   
   def pawn_agreement
     @title_loan = TitleLoan.find(params[:id])
-    render :layout => false
   end
 end
