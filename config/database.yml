@@ -22,7 +22,7 @@ test:
 production:
   adapter: mysql
   database: titleloan_prod
-  username: titleloan
-  password: lalo123
+  username: root
+  password: 
   pool: 5
   timeout: 5000
